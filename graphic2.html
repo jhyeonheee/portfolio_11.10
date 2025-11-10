@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>그래픽</title>
+    <link rel="stylesheet" href="css/그래픽2.css">
+
+    <script src="lib/gsap.min.js"></script>
+    <script src="lib/ScrollTrigger.min.js"></script>
+    <script src="lib/ScrollSmoother.min.js"></script>
+
+    <script>
+        window.addEventListener("load", () => {
+            /* const skewSetter = gsap.quickTo("img", "skewY"),
+                clamp = gsap.utils.clamp(-20, 20);
+
+            ScrollSmoother.create({
+                wrapper: "#wrapper",
+                content: "#content",
+                smooth: 2,
+                speed: 3,
+                effects: true,
+                onUpdate: self => skewSetter(clamp(self.getVelocity() / -50)),
+                onStop: () => skewSetter(0),
+                fixedElements: ".image_popup"
+            });//image scroll end */
+
+            setTimeout(() => {
+                const imageWraps = document.querySelectorAll(".image_wrap");
+
+                imageWraps.forEach(wrap => {
+                    const img = wrap.querySelector("img");
+                    const target = img.dataset.target.toLowerCase();
+                    const popup = document.querySelector(`.image_popup[data-target="${target}"]`);
+                    if (!popup) return;
+
+                    const closeBtn = popup.querySelector("button");
+
+                    img.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        popup.classList.add("active");
+                        document.body.classList.add("popup-open");
+                        
+
+                        gsap.fromTo(
+                            popup.querySelector(".inner"),
+                            { scale: 0.8, opacity: 0 },
+                            { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" }
+                        );//gsap
+                    });//open end
+
+                    closeBtn.addEventListener("click", () => {
+                        gsap.to(popup.querySelector(".inner"), {
+                            scale: 0.8,
+                            opacity: 0,
+                            duration: 0.3,
+                            ease: "power2.in",
+                            onComplete: () => {
+                                popup.classList.remove("active");
+                                document.body.classList.remove("popup-open");
+                            },
+                        });
+                    });//close end
+                });
+            }, 500);
+        });//script end
+
+
+        /*  var target = document.querySelectorAll('.image_wrap');
+         var btnPopClose = document.querySelectorAll('.image_popup button');
+         var targetID
+ 
+         for (var i = 0; i < target.length; i++) {
+             target[i].addEventListener('click', function () {
+                 targetID = this.getAttribute('href');
+                 document.querySelector(targetID).style.display = 'block';
+             });
+         }//팝업 open end
+ 
+         for (var j = 0; j < target.length; j++) {
+             btnPopClose[j].addEventListener('click', function () {
+                 this.parentNode.parentNode.style.display = 'none';
+             });
+         }//팝업닫기 end */
+
+
+
+
+    </script>
+</head>
+
+<body>
+    <div class="graphic">
+        <div class="inner">
+            <h1 class="title">GRAPHIC DESIGN</h1>
+            <h1 aria-hidden="true" class="title outline-text">GRAPHIC DESIGN</h1>
+            <h1 aria-hidden="true" class="title filter-text">GRAPHIC DESIGN</h1>
+            <div id="wrapper">
+                <section id="content">
+                    <section class="images">
+
+                        <div class="image_wrap first ">
+                            <img src="img/alramy.jpg" data-target="alramy" alt="img">
+                            <div class="hover">
+                                <div class="hover_text">
+                                    <strong>작품설명</strong>
+                                    <p>소요시간 30분</p>
+                                </div><!-- .hover_text end -->
+                                <div class="hover_image">
+                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                </div><!-- .hover_image end -->
+                            </div><!-- .hover end -->
+
+                        </div><!-- image_wrap -->
+
+
+
+                        <div class="image_wrap second">
+                            <img src="img/Illiyoon.jpg" data-target="illiyoon" alt="img">
+                            <div class="hover">
+                                <div class="hover_text">
+                                    <strong>작품설명</strong>
+                                    <p>소요시간 30분</p>
+                                </div><!-- .hover_text end -->
+                                <div class="hover_image">
+                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                </div><!-- .hover_image end -->
+                            </div><!-- .hover end -->
+                        </div><!-- image_wrap -->
+
+
+
+                        <div class="image_wrap third">
+                            <img src="img/subway.jpg" data-target="subway" alt="img">
+                            <div class="hover">
+                                <div class="hover_text">
+                                    <strong>작품설명</strong>
+                                    <p>소요시간 30분</p>
+                                </div><!-- .hover_text end -->
+                                <div class="hover_image">
+                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                </div><!-- .hover_image end -->
+                            </div><!-- .hover end -->
+                        </div><!-- image_wrap -->
+
+
+                        <div class="image_wrap forth">
+                            <img src="img/storm.jpg" data-target="storm" alt="img">
+                            <div class="hover">
+                                <div class="hover_text">
+                                    <strong>작품설명</strong>
+                                    <p>소요시간 30분</p>
+                                </div><!-- .hover_text end -->
+                                <div class="hover_image">
+                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                </div><!-- .hover_image end -->
+                            </div><!-- .hover end -->
+                        </div><!-- image_wrap -->
+
+                        <div class="image_wrap fifth">
+                            <img src="img/NDY.jpg" data-target="ndy" alt="img">
+                            <div class="hover">
+                                <div class="hover_text">
+                                    <strong>작품설명</strong>
+                                    <p>소요시간 30분</p>
+                                </div><!-- .hover_text end -->
+                                <div class="hover_image">
+                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                </div><!-- .hover_image end -->
+                            </div><!-- .hover end -->
+                        </div><!-- image_wrap -->
+
+                        <div class="image_wrap sixth">
+                            <img src="img/moneytree.jpg" data-target="moneytree" alt="img">
+                            <div class="hover">
+                                <div class="hover_text">
+                                    <strong>작품설명</strong>
+                                    <p>소요시간 30분</p>
+                                </div><!-- .hover_text end -->
+                                <div class="hover_image">
+                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                </div><!-- .hover_image end -->
+                            </div><!-- .hover end -->
+                        </div><!-- image_wrap -->
+
+
+                        <div class="image_wrap seventh">
+                            <img src="img/alramy.jpg" data-target="alramy" alt="img">
+                            <div class="hover">
+                                <div class="hover_text">
+                                    <strong>작품설명</strong>
+                                    <p>소요시간 30분</p>
+                                </div><!-- .hover_text end -->
+                                <div class="hover_image">
+                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                </div><!-- .hover_image end -->
+                            </div><!-- .hover end -->
+                        </div><!-- image_wrap -->
+
+                        <div class="image_wrap eighth">
+                            <img src="img/Illiyoon.jpg" data-target="illiyoon" alt="img">
+                            <div class="hover">
+                                <div class="hover_text">
+                                    <strong>작품설명</strong>
+                                    <p>소요시간 30분</p>
+                                </div><!-- .hover_text end -->
+                                <div class="hover_image">
+                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                </div><!-- .hover_image end -->
+                            </div><!-- .hover end -->
+                        </div><!-- image_wrap -->
+
+                    </section><!-- .images -->
+                </section><!-- #content end -->
+            </div><!-- .wrapper end -->
+
+            <div class="image_popup first" data-target="alramy">
+                <div class="inner">
+                    <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                    <button><img src="img/close_btn.svg" alt=""></button>
+                    <div class="popup_text">
+                        <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                            이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                            그 근원인 중심부만 파훼하면 사라집니다.</p>
+                    </div><!-- .popup_text end -->
+                </div><!-- .inner end -->
+            </div><!-- image_popup end -->
+
+
+
+            <div class="image_popup second" data-target="illiyoon">
+                <div class="inner">
+                    <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                    <button><img src="img/close_btn.svg" alt=""></button>
+                    <div class="popup_text">
+                        <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                            이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                            그 근원인 중심부만 파훼하면 사라집니다.</p>
+                    </div><!-- .popup_text end -->
+                </div><!-- .inner end -->
+            </div><!-- image_popup end -->
+
+            <div class="image_popup third" data-target="subway">
+                <div class="inner">
+                    <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                    <button><img src="img/close_btn.svg" alt=""></button>
+                    <div class="popup_text">
+                        <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                            이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                            그 근원인 중심부만 파훼하면 사라집니다.</p>
+                    </div><!-- .popup_text end -->
+                </div><!-- .inner end -->
+            </div><!-- image_popup end -->
+
+            <div class="image_popup forth" data-target="storm">
+                <div class="inner">
+                    <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                    <button><img src="img/close_btn.svg" alt=""></button>
+                    <div class="popup_text">
+                        <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                            이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                            그 근원인 중심부만 파훼하면 사라집니다.</p>
+                    </div><!-- .popup_text end -->
+                </div><!-- .inner end -->
+            </div><!-- image_popup end -->
+
+            <div class="image_popup fifth" data-target="ndy">
+                <div class="inner">
+                    <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                    <button><img src="img/close_btn.svg" alt=""></button>
+                    <div class="popup_text">
+                        <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                            이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                            그 근원인 중심부만 파훼하면 사라집니다.</p>
+                    </div><!-- .popup_text end -->
+                </div><!-- .inner end -->
+            </div><!-- image_popup end -->
+
+            <div class="image_popup sixth" data-target="moneytree">
+                <div class="inner">
+                    <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                    <button><img src="img/close_btn.svg" alt=""></button>
+                    <div class="popup_text">
+                        <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                            이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                            그 근원인 중심부만 파훼하면 사라집니다.</p>
+                    </div><!-- .popup_text end -->
+                </div><!-- .inner end -->
+            </div><!-- image_popup end -->
+
+
+
+            <div class="image_popup seventh" data-target="alramy">
+                <div class="inner">
+                    <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                    <button><img src="img/close_btn.svg" alt=""></button>
+                    <div class="popup_text">
+                        <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                            이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                            그 근원인 중심부만 파훼하면 사라집니다.</p>
+                    </div><!-- .popup_text end -->
+                </div><!-- .inner end -->
+            </div><!-- image_popup end -->
+
+            <div class="image_popup eighth" data-target="illiyoon">
+                <div class="inner">
+                    <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                    <button><img src="img/close_btn.svg" alt=""></button>
+                    <div class="popup_text">
+                        <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                            이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                            그 근원인 중심부만 파훼하면 사라집니다.</p>
+                    </div><!-- .popup_text end -->
+                </div><!-- .inner end -->
+            </div><!-- image_popup end -->
+
+        </div><!-- .inner end -->
+    </div><!-- .graphic end -->
+
+
+    <div class="footer">
+        <div class="inner">
+            <div class="contact_title">
+                <img src="img/decoBlock.svg" alt="">
+                <h3>CONTACT ME</h3>
+            </div><!-- .title end -->
+            <div class="contact">
+                <a href="#" class="icon phone">
+                    <img src="img/icon_contact/phone.png" alt="phone">
+                    <p>010 - 4828 - 2714</p>
+                </a><!-- phone end -->
+                <a href="#" class="icon mail_address">
+                    <img src="img/icon_contact/mail.png" alt="mail">
+                    <p>junghyeon5315@gmail.com</p>
+                </a><!-- .mail_address end -->
+                <a href="#" class="icon kakao">
+                    <img src="img/icon_contact/mail.png" alt="mail">
+                    <p>jhh9505</p>
+                </a><!-- .kakao end -->
+                <a href="#" class="icon githurb">
+                    <img src="img/icon_contact/githurb.png" alt="githurb">
+                    <p>@jhyeonheee</p>
+                </a><!-- .git_hurb end -->
+            </div><!-- .contact end -->
+            <span class="update">포트폴리오는 지속적으로 업데이트 될 예정입니다</span>
+        </div><!-- .inner end -->
+    </div><!-- .footer end -->
+
+
+</body>
+
+</html>

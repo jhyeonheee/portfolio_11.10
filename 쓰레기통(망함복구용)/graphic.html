@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>그래픽</title>
+    <link rel="stylesheet" href="css/그래픽.css">
+
+   <script src="lib/gsap.min.js"></script>
+   <script src="lib/ScrollTrigger.min.js"></script>
+    <script src="lib/ScrollSmoother.min.js"></script>
+
+    <script>
+        window.onload = () => {
+            let skewSetter = gsap.quickTo("img", "skewY"), // fast
+                clamp = gsap.utils.clamp(-20, 20); // don't let the skew go beyond 20 degrees.
+
+            ScrollSmoother.create({
+                wrapper: "#wrapper",
+                content: "#content",
+                smooth: 2,
+                speed: 3,
+                effects: true,
+                onUpdate: self => skewSetter(clamp(self.getVelocity() / -50)),
+                onStop: () => skewSetter(0)
+            });
+
+        };//script end
+
+    </script>
+</head>
+
+<body>
+    <div class="graphic">
+        <div class="inner">
+            <h1 class="title">GRAPHIC DESIGN</h1>
+            <h1 aria-hidden="true" class="title outline-text">GRAPHIC DESIGN</h1>
+            <h1 aria-hidden="true" class="title filter-text">GRAPHIC DESIGN</h1>
+            <div id="wrapper">
+                <section id="content">
+                    <section class="images">
+                        <img src="img/alramy.jpg" alt="img">
+                        <img src="img/Illiyoon.jpg" alt="img">
+                        <img src="img/subway.jpg" alt="img">
+                        <img src="img/storm.jpg" alt="img">
+                        <img src="img/NDY.jpg" alt="img">
+                        <img src="img/moneytree.jpg" alt="img">
+                        <img src="img/alramy.jpg" alt="img">
+                        <img src="img/Illiyoon.jpg" alt="img">
+                    </section>
+                </section><!-- #content end -->
+            </div><!-- .wrapper end -->
+        </div><!-- .inner end -->
+    </div><!-- .graphic end -->
+
+   
+        <div class="footer">
+            <div class="inner">
+                <div class="contact_title">
+                    <img src="img/decoBlock.svg" alt="">
+                    <h3>CONTACT ME</h3>
+                </div><!-- .title end -->
+                <div class="contact">
+                    <a href="#" class="icon phone">
+                        <img src="img/icon_contact/phone.png" alt="phone">
+                        <p>010 - 4828 - 2714</p>
+                    </a><!-- phone end -->
+                    <a href="#" class="icon mail_address">
+                        <img src="img/icon_contact/mail.png" alt="mail">
+                        <p>junghyeon5315@gmail.com</p>
+                    </a><!-- .mail_address end -->
+                    <a href="#" class="icon kakao">
+                        <img src="img/icon_contact/mail.png" alt="mail">
+                        <p>jhh9505</p>
+                    </a><!-- .kakao end -->
+                    <a href="#" class="icon githurb">
+                        <img src="img/icon_contact/githurb.png" alt="githurb">
+                        <p>@jhyeonheee</p>
+                    </a><!-- .git_hurb end -->
+                </div><!-- .contact end -->
+                <span class="update">포트폴리오는 지속적으로 업데이트 될 예정입니다</span>
+            </div><!-- .inner end -->
+        </div><!-- .footer end -->
+  
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>정현희 개인 홈페이지 Hero</title>
+  <link rel="stylesheet" href="css/font.css" />
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root {
+      --neon: #D5FF00;
+      --violet: #5B00FF;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #fff;
+      font-family: 'Archivo';
+      overflow-x: hidden;
+    }
+
+    .hero {
+      height: 100vh;
+      position: relative;
+      margin: 0 auto;
+      background: #000;
+    }
+
+    .hero__pin {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: visible;
+      margin: 0 auto;
+    }
+
+    .title {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: 900;
+      font-style: italic;
+      font-size: 150px;
+      color: var(--neon);
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .frame {
+      position: relative;
+      width: 500px;
+      height: 500px;
+      margin: 0 auto;
+      overflow: visible;
+      z-index: 2;
+      opacity: 0;
+    }
+
+    .photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity .8s ease;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: #5B00FF;
+      opacity: 0;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .hashtags-wrap {
+      width: 200vh;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      z-index: 10;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .hashtags {
+      white-space: nowrap;
+      display: inline-flex;
+      gap: 64px;
+      font-size: 200px;
+      font-weight: 900;
+      font-style: italic;
+      color: var(--violet);
+      padding-inline: 6vw;
+      transition: color 0.4s ease, text-shadow 0.4s ease;
+    }
+
+    .hashtags.glow {
+      color: var(--neon);
+      text-shadow: 0 0 20px var(--neon), 0 0 40px var(--neon);
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero__pin" id="heroPin">
+
+      <h1 class="title">I AM RESEARCHER</h1>
+
+      <div class="frame" id="frame">
+        <img class="photo photo--1" src="img/mainVisual.jpg" alt="">
+        <img class="photo photo--2" src="img/storm.jpg" alt="">
+        <div class="overlay"></div>
+
+        <div class="hashtags-wrap">
+          <div class="hashtags" id="hashtags">
+            <span># Creativity</span>
+            <span># Trendy</span>
+            <span># User-centric</span>
+            <span># Research</span>
+            <span># Insight</span>
+            <span># Flexible</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    window.addEventListener('load', () => {
+      const frame = document.getElementById('frame');
+      const photo1 = document.querySelector('.photo--1');
+      const photo2 = document.querySelector('.photo--2');
+      const overlay = document.querySelector('.overlay');
+      const title = document.querySelector('.title');
+      const hashtagsWrap = document.querySelector('.hashtags-wrap');
+      const hashtags = document.getElementById('hashtags');
+
+      // 초기값 세팅
+      gsap.set(frame, { width: 500, height: 500, opacity: 0 });
+      gsap.set(overlay, { opacity: 0 });
+
+      // 등장 시퀀스
+      gsap.to(title, { opacity: 1, duration: 1, delay: 0.5 });
+      gsap.to(frame, { opacity: 1, duration: 1, delay: 1.5 });
+      gsap.to(photo1, { opacity: 1, duration: 1, delay: 1.5 });
+
+      // 🌈 해시태그 색상 전환 감지 함수
+      function updateHashtagGlow() {
+        const hRect = hashtags.getBoundingClientRect();
+        const fRect = frame.getBoundingClientRect();
+
+        // hashtags 중앙값 기준으로 프레임 범위 안인지 판단
+        const midX = hRect.left + hRect.width / 2;
+        const inFrame = midX > fRect.left && midX < fRect.right;
+
+        // 클래스 토글 (hover 느낌)
+        if (inFrame) {
+          hashtags.classList.add('glow');
+        } else {
+          hashtags.classList.remove('glow');
+        }
+      }
+
+      // 메인 타임라인
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#heroPin',
+          start: 'top top',
+          end: '+=6000',
+          scrub: true,
+          pin: true,
+          onUpdate: updateHashtagGlow, // 💡 위치 감지 업데이트
+        }
+      });
+
+      tl.to(frame, { width: 1062, duration: 1.2 })
+        .to(title, { opacity: 0, duration: 1.8 }, "<")
+        .to(photo1, { opacity: 0, duration: 0.8 }, "<")
+        .to(photo2, { opacity: 1, duration: 0.8 }, "<")
+        .to(overlay, { opacity: 0, duration: 0.5 }, "<")
+
+        .to(frame, { width: 1486, height: 743, duration: 1.1 }, "+=0.5")
+        .to(overlay, { opacity: 0.5, duration: 1.1 }, "<")
+
+        .to(hashtagsWrap, { opacity: 1, duration: 0.6 }, "+=0.2")
+        .fromTo(hashtags, { x: () => hashtagsWrap.clientWidth + 40 },
+          { x: () => -(hashtags.scrollWidth - hashtagsWrap.clientWidth) - 40, duration: 2.0, ease: "none" })
+
+        .to(frame, {
+          width: "100vw",
+          height: "100vh",
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          duration: 1.8,
+          ease: "power2.out"
+        })
+        .to(overlay, { opacity: 0.8, duration: 1.8 }, "<")
+        .to(photo2, { opacity: 0.4, scale: 1.15, duration: 2.2 }, "<");
+
+      // 리사이즈시 새로 계산
+      window.addEventListener('resize', () => {
+        ScrollTrigger.refresh();
+        updateHashtagGlow();
+      });
+    });
+  </script>
+</body>
+</html>

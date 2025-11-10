@@ -1,0 +1,239 @@
+@charset "utf-8" ;
+
+@font-face {
+    font-family:'pretendard';
+    src: url('../font/pre/Pretendard-ExtraBold.eot');
+    src: url('../font/pre/Pretendard-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('../font/pre/Pretendard-ExtraBold.woff2') format('woff2'),
+        url('../font/pre/Pretendard-ExtraBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family:'pretendard';
+    src: url('../font/pre/Pretendard-Bold.eot');
+    src: url('../font/pre/Pretendard-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../font/pre/Pretendard-Bold.woff2') format('woff2'),
+        url('../font/pre/Pretendard-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family:'pretendard';
+    src: url('../font/pre/Pretendard-Black.eot');
+    src: url('../font/pre/Pretendard-Black.eot?#iefix') format('embedded-opentype'),
+        url('../font/pre/Pretendard-Black.woff2') format('woff2'),
+        url('../font/pre/Pretendard-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family:'pretendard';
+    src: url('../font/pre/Pretendard-ExtraLight.eot');
+    src: url('../font/pre/Pretendard-ExtraLight.eot?#iefix') format('embedded-opentype'),
+        url('../font/pre/Pretendard-ExtraLight.woff2') format('woff2'),
+        url('../font/pre/Pretendard-ExtraLight.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family:'pretendard';
+    src: url('../font/pre/Pretendard-Medium.eot');
+    src: url('../font/pre/Pretendard-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../font/pre/Pretendard-Medium.woff2') format('woff2'),
+        url('../font/pre/Pretendard-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family:'pretendard';
+    src: url('../font/pre/Pretendard-Light.eot');
+    src: url('../font/pre/Pretendard-Light.eot?#iefix') format('embedded-opentype'),
+        url('../font/pre/Pretendard-Light.woff2') format('woff2'),
+        url('../font/pre/Pretendard-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family:'pretendard';
+    src: url('../font/pre/Pretendard-Regular.eot');
+    src: url('../font/pre/Pretendard-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../font/pre/Pretendard-Regular.woff2') format('woff2'),
+        url('../font/pre/Pretendard-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family:'pretendard';
+    src: url('../font/pre/Pretendard-SemiBold.eot');
+    src: url('../font/pre/Pretendard-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('../font/pre/Pretendard-SemiBold.woff2') format('woff2'),
+        url('../font/pre/Pretendard-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family:'pretendard';
+    src: url('../font/pre/Pretendard-Thin.eot');
+    src: url('../font/pre/Pretendard-Thin.eot?#iefix') format('embedded-opentype'),
+        url('../font/pre/Pretendard-Thin.woff2') format('woff2'),
+        url('../font/pre/Pretendard-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/* pretendard end */
+
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('CormorantGaramond-Regular.eot');
+    src: url('CormorantGaramond-Regular.eot?#iefix') format('embedded-opentype'),
+        url('CormorantGaramond-Regular.woff2') format('woff2'),
+        url('CormorantGaramond-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('CormorantGaramond-MediumItalic.eot');
+    src: url('CormorantGaramond-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('CormorantGaramond-MediumItalic.woff2') format('woff2'),
+        url('CormorantGaramond-MediumItalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('CormorantGaramond-Medium.eot');
+    src: url('CormorantGaramond-Medium.eot?#iefix') format('embedded-opentype'),
+        url('CormorantGaramond-Medium.woff2') format('woff2'),
+        url('CormorantGaramond-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('CormorantGaramond-BoldItalic.eot');
+    src: url('CormorantGaramond-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('CormorantGaramond-BoldItalic.woff2') format('woff2'),
+        url('CormorantGaramond-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('CormorantGaramond-Light.eot');
+    src: url('CormorantGaramond-Light.eot?#iefix') format('embedded-opentype'),
+        url('CormorantGaramond-Light.woff2') format('woff2'),
+        url('CormorantGaramond-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('CormorantGaramond-SemiBold.eot');
+    src: url('CormorantGaramond-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('CormorantGaramond-SemiBold.woff2') format('woff2'),
+        url('CormorantGaramond-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('CormorantGaramond-SemiBoldItalic.eot');
+    src: url('CormorantGaramond-SemiBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('CormorantGaramond-SemiBoldItalic.woff2') format('woff2'),
+        url('CormorantGaramond-SemiBoldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('CormorantGaramond-Bold.eot');
+    src: url('CormorantGaramond-Bold.eot?#iefix') format('embedded-opentype'),
+        url('CormorantGaramond-Bold.woff2') format('woff2'),
+        url('CormorantGaramond-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('CormorantGaramond-Italic.eot');
+    src: url('CormorantGaramond-Italic.eot?#iefix') format('embedded-opentype'),
+        url('CormorantGaramond-Italic.woff2') format('woff2'),
+        url('CormorantGaramond-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('CormorantGaramond-LightItalic.eot');
+    src: url('CormorantGaramond-LightItalic.eot?#iefix') format('embedded-opentype'),
+        url('CormorantGaramond-LightItalic.woff2') format('woff2'),
+        url('CormorantGaramond-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Garamond end */
+
+@font-face {
+    font-family: 'Archivo';
+    src: url('Archivo-BlackItalic.eot');
+    src: url('Archivo-BlackItalic.eot?#iefix') format('embedded-opentype'),
+        url('Archivo-BlackItalic.woff2') format('woff2'),
+        url('Archivo-BlackItalic.woff') format('woff');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Archivo';
+    src: url('Archivo-Black.eot');
+    src: url('Archivo-Black.eot?#iefix') format('embedded-opentype'),
+        url('Archivo-Black.woff2') format('woff2'),
+        url('Archivo-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Archivo end */

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>정현희 개인 홈페이지 Hero</title>
+    <link rel="stylesheet" href="css/font.css">
+
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --neon: #D5FF00;
+            --violet: #7D35FF;
+            --ink: #000;
+            --paper: #fff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: 'Archivo';
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* ===== Stage ===== */
+        .hero {
+            height: 100vh;
+            /* 화면을 꽉 채우고 */
+            position: relative;
+            margin: 0 auto;
+        }
+
+        /* 핀될 컨테이너 (안에서 타임라인 전부 수행) */
+        .hero__pin {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: visible;
+            margin: 0 auto;
+        }
+
+        /* ===== Top Nav (가짜 자리잡기) ===== */
+        .top-gap {
+            height: 150px;
+        }
+
+        /* 상단 로고/내비 공간 확보용 (원하는 값으로 조정) */
+
+        /* ===== Title ===== */
+        .title {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-weight: 900;
+            font-style: italic;
+            white-space: nowrap;
+            line-height: 1.05;
+            font-size: 150px;
+            letter-spacing: 0.02em;
+            color: var(--neon);
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* ===== Image Box ===== */
+        .frame {
+            position: relative;
+            width: 500px;
+            /* 기본 width */
+            height: auto;
+            /* 고정 height */
+            margin: 48px auto 24px;
+            overflow: hidden;
+            will-change: width;
+            z-index: 2;
+        }
+
+        /* 크기가 커져도 화면 밖으로 삐져나오지 않게 한쪽을 잘라내는 대신 가운데 정렬 */
+        .frame--center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .photo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0;
+            transition: opacity .8s ease;
+        }
+
+        .photo.is-active {
+            opacity: 1;
+        }
+
+        /* ===== Context Texts (위/아래에서 등장) ===== */
+        .context {
+            position: relative;
+            width: min(1486px, 92vw);
+            margin: 12px auto 16px;
+            text-align: center;
+            font-weight: 900;
+            color: #BCA4FF;
+            letter-spacing: 0.02em;
+            will-change: opacity, transform;
+        }
+
+        .context--top {
+            font-size: 80px;
+            font-weight: 900;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(80px);
+        }
+
+        .context--bottom {
+            font-size: 80px;
+            font-weight: 900;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(-80px);
+        }
+
+        /* ===== Hashtags (가로 스크롤) ===== */
+        .hashtags-wrap {
+            width: 100%;
+            overflow: hidden;
+            height: 110px;
+            margin-top: 24px;
+            position: relative;
+            opacity: 0;
+            /* 2차 확대 후 등장 */
+        }
+
+        .hashtags {
+            position: absolute;
+            left: 0;
+            top: 0;
+            white-space: nowrap;
+            display: inline-flex;
+            gap: 64px;
+            align-items: center;
+            height: 110px;
+            font-size: 200px;
+            font-weight: 900;
+            font-style: italic;
+            color: var(--neon);
+            will-change: transform;
+            padding-inline: 6vw;
+        }
+
+        .hashtags span {
+            display: inline-block;
+        }
+
+        /* 가이드용 바닥 여백 (핀 종료 후 자연스러움) */
+        .after {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 18px;
+        }
+
+        /* 접근성 대비 향상 */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="hero">
+        <div class="hero__pin" id="heroPin">
+            <div class="top-gap"></div>
+
+            <!-- 1. 타이틀 -->
+            <h1 class="title">I AM RESEARCHER</h1>
+
+            <!-- 2. 이미지 프레임 (고정 높이 500px) -->
+            <div class="frame frame--center" id="frame">
+                <!-- 교차 페이드용 두 장 (경로만 교체하세요) -->
+                <img class="photo photo--1 is-active" src="img/mainVisual.jpg" alt="">
+                <img class="photo photo--2" src="img/storm.jpg" alt="">
+            </div>
+
+            <!-- 3. 컨텍스트 텍스트 -->
+            <div class="context context--top">UNCOVER THE CONTEXT!</div>
+            <div class="context context--bottom">CONTEXT FROM SWIRL</div>
+
+            <!-- 4. 해시태그 러너 -->
+            <div class="hashtags-wrap">
+                <div class="hashtags" id="hashtags">
+                    <span># Creativity</span>
+                    <span># Trendy</span>
+                    <span># User-centric</span>
+                    <span># Research</span>
+                    <span># Insight</span>
+                    <span># Flexible</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <div class="after">핀 구간 종료</div> -->
+
+    <script>
+        // ===== Config (요구 스펙) =====
+        const WIDTHS = {
+            base: 500,     // 기본
+            w1: 1062,      // 1차
+            w2: 1486,      // 2차
+            w3: 1920       // 3차(풀폭)
+        };
+        const FRAME_H = 500;         // height는 500px 고정
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.addEventListener('load', () => {
+            const frame = document.getElementById('frame');
+            const photo1 = document.querySelector('.photo--1');
+            const photo2 = document.querySelector('.photo--2');
+            const title = document.querySelector('.title');
+            const topTxt = document.querySelector('.context--top');
+            const botTxt = document.querySelector('.context--bottom');
+            const hashtagsWrap = document.querySelector('.hashtags-wrap');
+            const hashtags = document.getElementById('hashtags');
+
+            // 초기 사이즈 보정
+            gsap.set(frame, {
+                width: WIDTHS.base,
+                height: FRAME_H,
+                position: "relative",
+                top: "auto",
+                left: "auto",
+                transform: "none",
+                scale: 1,
+            });
+
+            // 1) 페이지 로드 시 타이틀 등장 → 2초 뒤 이미지 등장
+            gsap.to(title, { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 0.3 });
+            gsap.to(photo1, { opacity: 1, duration: 1, delay: 2 });  // 기본 500px 박스 안에서 등장
+
+            // 2) 스크롤 타임라인 (모든 연출을 하나의 pin 구간에서 처리)
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '#heroPin',
+                    start: 'top top',
+                    end: '+=6000',   // 스크롤 총 길이 (느리게 보고 싶으면 늘리기)
+                    scrub: true,
+                    pin: true
+                }
+            });
+
+            // 단계 A: 1차 확대(500 → 1062) + 이미지 교차 + 컨텍스트 텍스트 위/아래에서 등장
+            tl.to(frame, { width: WIDTHS.w1, duration: 1.2, ease: "power1.out" }, "+=0.2")
+                .to(photo1, { opacity: 0, duration: 0.8, ease: "power1.out" }, "<")
+                .to(photo2, { opacity: 1, duration: 0.8, ease: "power1.out" }, "<")
+                .to(topTxt, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "<0.2")
+                .to(botTxt, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "<0.1");
+
+            // 단계 B: 텍스트 서서히 사라짐 → 2차 확대(1062 → 1486)
+            tl.to([topTxt, botTxt], { opacity: 0, duration: 0.8, ease: "power1.out" }, "+=0.5")
+                .to(frame, { width: WIDTHS.w2, duration: 1.1, ease: "power1.out" }, "<");
+
+            // 단계 C: 해시태그 섹션 노출 + 오른쪽 → 왼쪽으로 주루룩
+            //         (wrap opacity로 등장시키고, 내부 x 이동)
+            const travel = () => {
+                // 해시태그 실제 폭 측정 (반응형에서도 자연스럽게)
+                const wrapW = hashtagsWrap.clientWidth;
+                const innerW = hashtags.scrollWidth;
+                // 오른쪽 바깥에서 왼쪽 바깥까지 이동
+                return -(innerW - wrapW) - 40; // 약간 여유치
+            };
+
+            tl.to(hashtagsWrap, { opacity: 1, duration: 0.6, ease: "power1.out" }, "+=0.2")
+                .fromTo(hashtags,
+                    { x: () => hashtagsWrap.clientWidth + 40 },
+                    {
+                        x: travel,
+                        duration: 2.0,
+                        ease: "none"
+                    }
+                );
+
+            // 단계 D: 해시태그 지나간 뒤 최종 3차 확대(1486 → 1920, height=500 유지)
+            tl.to(hashtagsWrap, { opacity: 0, duration: 0.5 }, "+=0.1")
+                .to(frame, {
+                    position: "fixed",              // ✅ fixed로 하면 정확히 뷰포트 기준
+                    top: "50%",                     // ✅ 가운데 배치
+                    left: "50%",
+                    transform: "translate(-50%, -50%)", // ✅ 중앙 정렬 (xPercent 사용 안함)
+                    width: "100vw",
+                    height: "100vh",
+                    zIndex: 10,
+                    transformOrigin: "center center",   // ✅ 중심에서 확대
+                    scale: 1.1,
+                    duration: 1.8,
+                    ease: "power2.out"
+                })
+
+                .to(".photo--2", {
+                    scale: 1.15,
+                    transformOrigin: "center center",   // ✅ 내부 이미지도 중심 확대
+                    duration: 2.2,
+                    ease: "power2.out"
+                }, "<");
+
+            // 리사이즈 시 해시태그 트래블 거리 재계산 (반응형 보정)
+            const refresh = () => {
+                ScrollTrigger.refresh();
+            };
+            window.addEventListener('resize', refresh);
+        });
+    </script>
+</body>
+
+</html>
