@@ -546,7 +546,7 @@ body {
 
 }
 
-#portfolio .banggle {
+/* #portfolio .banggle {
     width: 728px;
     position: absolute;
     top: 45%;
@@ -572,7 +572,7 @@ body {
     width: 100%;
     height: 728px;
     object-fit: cover;
-}
+} */
 
 #portfolio .inner {
     padding: 150px 70px 0 70px;
@@ -1288,7 +1288,11 @@ body.popup-open {
     overflow: hidden;
 }
 
-.image_popup .inner .popup_text .popup_desc {}
+#popup-second {
+    background-color: transparent;
+    color: #fff;
+}
+
 
 /* img popup end */
 
