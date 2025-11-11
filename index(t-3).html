@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>정현희 개인 홈페이지</title>
-    <link rel="stylesheet" href="css/main(t).css">
+    <link rel="stylesheet" href="css/fancybox.css">
+    <link rel="stylesheet" href="css/main(t-2).css">
 
+    <script src="lib/fancybox.umd.js"></script>
     <script src="lib/gsap.min.js"></script>
     <script src="lib/ScrollTrigger.min.js"></script>
     <script src="lib/ScrollSmoother.min.js"></script>
@@ -111,9 +113,9 @@
             tl.to(hashtagsWrap, { opacity: 0, duration: 0.5 }, "+=0.1")
                 .to(frame, {
                     position: "absolute",
-                    top: "50%",
+                   /*  top: "50%",
                     left: "50%",
-                    transform: "translate(-50%, -50%)",
+                    transform: "translate(-50%, -50%)", */
                     width: "100vw",
                     height: "100vh",
                     zIndex: 10,
@@ -126,7 +128,7 @@
                 .to(overlay, { opacity: 0.9, duration: 1.8, ease: "none" }, "<")
             tl.to(".photo--2", {
                 opacity: 0.3,
-                scale: 1.15,
+                // scale: 1.15,
                 transformOrigin: "center center",
                 duration: 2.2,
                 ease: "power2.out"
@@ -294,7 +296,18 @@
 
             /*  observer.observe(graphicArea); */
 
+            Fancybox.bind("[data-fancybox]", {
+                dragToClose: false,
+                closeButton: "outside",
+                backdropClick: true,
+                animated: true,
+                placeFocusBack: false,
+                hideScrollbar: false,
+            });
+
         });//window.onload
+
+
     </script>
 </head>
 
@@ -684,7 +697,7 @@
                                     <div class="left_contents">
                                         <img class="project-card_thumb" src="img/museumVisual.png" alt="img">
 
-                                       
+
 
                                         <div class="text_wrap">
 
@@ -737,7 +750,7 @@
                                                 적용 시키는지에 따라 편의성의 여부가 결정된다는 것을 깨닫게 되었습니다</span>
                                         </div><!-- .insight end -->
 
-                                         <div class="btn">
+                                        <div class="btn">
                                             <button><a href="https://jhyeonheee.github.io/M1030/">WEBSITE</a></button>
                                             <button><a
                                                     href="d:\정현희\포트폴리오&일정 정리\포트폴리오 프로세스\국립중앙박물관.pdf">PROCESS</a></button>
@@ -830,7 +843,7 @@
                                     <div class="left_contents">
                                         <img class="project-card_thumb" src="img/subwayApp.png" alt="img">
 
-                                        
+
 
                                         <div class="text_wrap">
 
@@ -917,7 +930,7 @@
                                     <div class="left_contents">
                                         <img class="project-card_thumb" src="img/ssocarVisual.JPG" alt="img">
 
-                                       
+
                                         <div class="text_wrap">
 
 
@@ -966,7 +979,7 @@
                                                 적용 시키는지에 따라 편의성의 여부가 결정된다는 것을 깨닫게 되었습니다</span>
                                         </div><!-- .insight end -->
 
-                                         <div class="btn">
+                                        <div class="btn">
                                             <button><a href="https://jhyeonheee.github.io/ssocar/">WEBSITE</a></button>
                                             <button><a
                                                     href="https://www.notion.so/_-2613babcead880af801dc02c16787d29?source=copy_link">NOTION</a></button>
@@ -984,7 +997,7 @@
                                     <div class="left_contents">
                                         <img class="project-card_thumb" src="img/innoceansVisual.JPG" alt="img">
 
-                                        
+
                                         <div class="text_wrap">
 
 
@@ -1051,7 +1064,7 @@
                                     <div class="left_contents">
                                         <img class="project-card_thumb" src="img/moneytreeVisual.png" alt="img">
 
-                                        
+
 
                                         <div class="text_wrap">
 
@@ -1122,7 +1135,7 @@
                                     <div class="left_contents">
                                         <img class="project-card_thumb" src="img/alarmyApp.png" alt="img">
 
-                                        
+
 
                                         <div class="text_wrap">
 
@@ -1199,24 +1212,22 @@
                         <section id="content">
                             <section class="images">
 
-                                <div class="image_wrap first ">
+                                <div class="image_wrap first" data-fancybox data-src="#popup-first">
                                     <img src="img/alramy.jpg" data-target="alramy" alt="img">
                                     <div class="hover">
                                         <div class="hover_text">
                                             <strong>작품설명</strong>
                                             <p>소요시간 30분</p>
                                         </div><!-- .hover_text end -->
+
                                         <div class="hover_image">
                                             <img src="img/icon_program/Photoshop.svg" alt="">
                                             <img src="img/icon_program/Illustrator.svg" alt="">
                                         </div><!-- .hover_image end -->
                                     </div><!-- .hover end -->
-
                                 </div><!-- image_wrap -->
 
-
-
-                                <div class="image_wrap second">
+                                <div class="image_wrap second" data-fancybox data-src="#popup-second">
                                     <img src="img/Illiyoon.jpg" data-target="illiyoon" alt="img">
                                     <div class="hover">
                                         <div class="hover_text">
@@ -1232,7 +1243,7 @@
 
 
 
-                                <div class="image_wrap third">
+                                <div class="image_wrap third" data-fancybox data-src="#popup-third">
                                     <img src="img/subway.jpg" data-target="subway" alt="img">
                                     <div class="hover">
                                         <div class="hover_text">
@@ -1247,7 +1258,8 @@
                                 </div><!-- image_wrap -->
 
 
-                                <div class="image_wrap forth">
+
+                                <div class="image_wrap forth" data-fancybox data-src="#popup-fourth">
                                     <img src="img/storm.jpg" data-target="storm" alt="img">
                                     <div class="hover">
                                         <div class="hover_text">
@@ -1261,7 +1273,8 @@
                                     </div><!-- .hover end -->
                                 </div><!-- image_wrap -->
 
-                                <div class="image_wrap fifth">
+
+                                <div class="image_wrap fifth" data-fancybox data-src="#popup-fifth">
                                     <img src="img/NDY.jpg" data-target="ndy" alt="img">
                                     <div class="hover">
                                         <div class="hover_text">
@@ -1275,7 +1288,10 @@
                                     </div><!-- .hover end -->
                                 </div><!-- image_wrap -->
 
-                                <div class="image_wrap sixth">
+
+
+
+                                <div class="image_wrap sixth" data-fancybox data-src="#popup-sixth">
                                     <img src="img/moneytree.jpg" data-target="moneytree" alt="img">
                                     <div class="hover">
                                         <div class="hover_text">
@@ -1290,7 +1306,8 @@
                                 </div><!-- image_wrap -->
 
 
-                                <div class="image_wrap seventh">
+
+                                <div class="image_wrap seventh" data-fancybox data-src="#popup-seventh">
                                     <img src="img/alramy.jpg" data-target="alramy" alt="img">
                                     <div class="hover">
                                         <div class="hover_text">
@@ -1304,7 +1321,9 @@
                                     </div><!-- .hover end -->
                                 </div><!-- image_wrap -->
 
-                                <div class="image_wrap eighth" >
+
+
+                                <div class="image_wrap eighth" data-fancybox data-src="#popup-eighth">
                                     <img src="img/Illiyoon.jpg" data-target="illiyoon" alt="img">
                                     <div class="hover">
                                         <div class="hover_text">
@@ -1318,120 +1337,96 @@
                                     </div><!-- .hover end -->
                                 </div><!-- image_wrap -->
 
+
+
                             </section><!-- .images -->
                         </section><!-- #content end -->
                     </div><!-- .wrapper end -->
-
-                    <div class="mobile_image">
-                        <div class="show">
-                            <a href="img/alramy.jpg" data-fancybox="gallery">
-
-                            </a><!-- data-fancybox end -->
-                        </div><!-- .show end -->
-                    </div><!-- .mobile_image end -->
-
-                    <div class="image_popup first" data-target="alramy">
-                        <div class="inner">
-                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
-                            <button><img src="img/close_btn.svg" alt=""></button>
-                            <div class="popup_text">
-                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
-                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
-                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
-                            </div><!-- .popup_text end -->
-                        </div><!-- .inner end -->
-                    </div><!-- image_popup end -->
-
-
-
-                    <div class="image_popup second" data-target="illiyoon">
-                        <div class="inner">
-                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
-                            <button><img src="img/close_btn.svg" alt=""></button>
-                            <div class="popup_text">
-                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
-                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
-                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
-                            </div><!-- .popup_text end -->
-                        </div><!-- .inner end -->
-                    </div><!-- image_popup end -->
-
-                    <div class="image_popup third" data-target="subway">
-                        <div class="inner">
-                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
-                            <button><img src="img/close_btn.svg" alt=""></button>
-                            <div class="popup_text">
-                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
-                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
-                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
-                            </div><!-- .popup_text end -->
-                        </div><!-- .inner end -->
-                    </div><!-- image_popup end -->
-
-                    <div class="image_popup forth" data-target="storm">
-                        <div class="inner">
-                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
-                            <button><img src="img/close_btn.svg" alt=""></button>
-                            <div class="popup_text">
-                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
-                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
-                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
-                            </div><!-- .popup_text end -->
-                        </div><!-- .inner end -->
-                    </div><!-- image_popup end -->
-
-                    <div class="image_popup fifth" data-target="ndy">
-                        <div class="inner">
-                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
-                            <button><img src="img/close_btn.svg" alt=""></button>
-                            <div class="popup_text">
-                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
-                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
-                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
-                            </div><!-- .popup_text end -->
-                        </div><!-- .inner end -->
-                    </div><!-- image_popup end -->
-
-                    <div class="image_popup sixth" data-target="moneytree">
-                        <div class="inner">
-                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
-                            <button><img src="img/close_btn.svg" alt=""></button>
-                            <div class="popup_text">
-                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
-                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
-                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
-                            </div><!-- .popup_text end -->
-                        </div><!-- .inner end -->
-                    </div><!-- image_popup end -->
-
-
-
-                    <div class="image_popup seventh" data-target="alramy">
-                        <div class="inner">
-                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
-                            <button><img src="img/close_btn.svg" alt=""></button>
-                            <div class="popup_text">
-                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
-                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
-                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
-                            </div><!-- .popup_text end -->
-                        </div><!-- .inner end -->
-                    </div><!-- image_popup end -->
-
-                    <div class="image_popup eighth" data-target="illiyoon">
-                        <div class="inner">
-                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
-                            <button><img src="img/close_btn.svg" alt=""></button>
-                            <div class="popup_text">
-                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
-                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
-                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
-                            </div><!-- .popup_text end -->
-                        </div><!-- .inner end -->
-                    </div><!-- image_popup end -->
-
                 </div><!-- .inner end -->
             </div><!-- .graphic end -->
+
+            <div id="popup-first" style="display:none; max-width:530px;">
+                <img src="img/alramy.jpg" alt="alramy 확대 이미지" style="width:100%; border-radius:10px;">
+                <div class="popup_text" style="margin-top:20px; text-align:center;">
+                    <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                        이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                        그 근원인 중심부만 파훼하면 사라집니다.</p>
+                </div><!-- .popup_text end -->
+
+            </div><!-- image_popup end -->
+
+            <div id="popup-second" style="display:none; max-width:530px;">
+                <img src="img/Illiyoon.jpg" alt="illiyoon 확대 이미지" style="width:100%; border-radius:10px;">
+                <div class="popup_text" style="margin-top:20px; text-align:center;">
+                    <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                        이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                        그 근원인 중심부만 파훼하면 사라집니다.</p>
+                </div><!-- .popup_text end -->
+
+            </div><!-- image_popup end -->
+
+
+            <div id="popup-third" style="display:none; max-width:530px;">
+                <img src="img/alramy.jpg" alt="alramy 확대 이미지" style="width:100%; border-radius:10px;">
+                <div class="popup_text" style="margin-top:20px; text-align:center;">
+                    <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                        이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                        그 근원인 중심부만 파훼하면 사라집니다.</p>
+                </div><!-- .popup_text end -->
+
+            </div><!-- image_popup end -->
+
+
+            <div id="popup-fourth" style="display:none; max-width:530px;">
+                <img src="img/alramy.jpg" alt="alramy 확대 이미지" style="width:100%; border-radius:10px;">
+                <div class="popup_text" style="margin-top:20px; text-align:center;">
+                    <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                        이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                        그 근원인 중심부만 파훼하면 사라집니다.</p>
+                </div><!-- .popup_text end -->
+
+            </div><!-- image_popup end -->
+
+
+            <div id="popup-fifth" style="display:none; max-width:530px;">
+                <img src="img/alramy.jpg" alt="alramy 확대 이미지" style="width:100%; border-radius:10px;">
+                <div class="popup_text" style="margin-top:20px; text-align:center;">
+                    <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                        이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                        그 근원인 중심부만 파훼하면 사라집니다.</p>
+                </div><!-- .popup_text end -->
+
+            </div><!-- image_popup end -->
+
+            <div id="popup-sixth" style="display:none; max-width:530px;">
+                <img src="img/alramy.jpg" alt="alramy 확대 이미지" style="width:100%; border-radius:10px;">
+                <div class="popup_text" style="margin-top:20px; text-align:center;">
+                    <p class="popup_desc">UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                        이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                        그 근원인 중심부만 파훼하면 사라집니다.</p>
+                </div><!-- .popup_text end -->
+
+            </div><!-- image_popup end -->
+
+            <div id="popup-seventh" style="display:none; max-width:530px;">
+                <img src="img/alramy.jpg" alt="alramy 확대 이미지" style="width:100%; border-radius:10px;">
+                <div class="popup_text" style="margin-top:20px; text-align:center;">
+                    <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                        이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                        그 근원인 중심부만 파훼하면 사라집니다.</p>
+                </div><!-- .popup_text end -->
+
+            </div><!-- image_popup end -->
+
+            <div id="popup-eighth" style="display:none; max-width:530px;">
+                <img src="img/alramy.jpg" alt="alramy 확대 이미지" style="width:100%; border-radius:10px;">
+                <div class="popup_text" style="margin-top:20px; text-align:center;">
+                    <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                        이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                        그 근원인 중심부만 파훼하면 사라집니다.</p>
+                </div><!-- .popup_text end -->
+
+            </div><!-- image_popup end -->
 
 
         </main><!-- .main end -->
