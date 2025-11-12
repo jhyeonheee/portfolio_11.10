@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정현희 개인 홈페이지</title>
+    <link rel="stylesheet" href="css/main(t).css">
+
+    <script src="lib/gsap.min.js"></script>
+    <script src="lib/ScrollTrigger.min.js"></script>
+    <script src="lib/ScrollSmoother.min.js"></script>
+    <script src="lib/jquery-3.7.0.min.js"></script>
+
+    <script>
+
+        window.addEventListener('load', () => {
+
+            let lastScrollY = window.scrollY;
+            const header = document.querySelector('.header');
+
+            window.addEventListener('scroll', () => {
+                const currentY = window.scrollY;
+
+
+                if (currentY > lastScrollY && currentY > 150) {
+                    header.classList.add('hide');
+                }
+
+                else {
+                    header.classList.remove('hide');
+                }
+
+                lastScrollY = currentY;
+            }); //.header end
+
+            const WIDTHS = {
+                base: 500,
+                w1: 1062,
+                w2: 1486,
+                w3: 1920
+            };
+            const HEIGHTS = {
+                base: 500,
+                h1: 500,
+                h2: 743,
+                h3: "100vh"
+            };
+
+            gsap.registerPlugin(ScrollTrigger);
+
+            const frame = document.getElementById('frame');
+            const photo1 = document.querySelector('.photo--1');
+            const photo2 = document.querySelector('.photo--2');
+            const overlay = document.querySelector('.overlay');
+            const title = document.querySelector('.title');
+            const topTxt = document.querySelector('.context--top');
+            const botTxt = document.querySelector('.context--bottom');
+            const hashtagsWrap = document.querySelector('.hashtags-wrap');
+            const hashtags = document.getElementById('hashtags');
+
+
+            gsap.set(frame, {
+                width: WIDTHS.base,
+                height: HEIGHTS.base,
+                opacity: 0,
+                position: "relative",
+                top: "auto",
+                left: "auto",
+                transform: "none"
+            });
+            gsap.set(overlay, { opacity: 0 });
+
+            gsap.to(title, { opacity: 1, duration: 1, delay: 0.5, ease: "power2.out" });
+            gsap.to(frame, { opacity: 1, duration: 1, delay: 1.5, ease: "power2.out" });
+            gsap.to(photo1, { opacity: 1, duration: 1, delay: 1.5 });
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '#heroPin',
+                    start: 'top top',
+                    end: '+=8000 ',
+                    scrub: true,
+                    pin: true,
+                    pinSpacing: true,
+                    invalidateOnRefresh: true
+                }
+            });
+
+            tl.to(frame, { width: WIDTHS.w1, height: HEIGHTS.h1, duration: 1.2, ease: "power1.out" }, "+=0.2")
+                .to(title, { opacity: 0, duration: 1.8, ease: "power1.out" }, "<") // 스크롤 시 타이틀 사라짐
+                .to(photo1, { opacity: 0, duration: 0.8, ease: "power1.out" }, "<")
+                .to(photo2, { opacity: 1, duration: 0.8, ease: "power1.out" }, "<")
+                .to(topTxt, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "<0.2")
+                .to(botTxt, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "<0.1")
+                .to(overlay, { opacity: 0, duration: 0.5, ease: "none" }, "<");
+
+            tl.to([topTxt, botTxt], { opacity: 0, duration: 0.8, ease: "power1.out" }, "+=0.5")
+                .to(frame, { width: WIDTHS.w2, height: HEIGHTS.h2, duration: 1.1, ease: "power1.out" }, "<")
+                .to(overlay, { opacity: 0.5, duration: 1.1, ease: "none" }, "<");
+
+            const travel = () => {
+                const wrapW = hashtagsWrap.clientWidth;
+                const innerW = hashtags.scrollWidth;
+                return -(innerW - wrapW) - 40;
+            };
+
+            tl.to(hashtagsWrap, { opacity: 1, duration: 0.6, ease: "power1.out" }, "+=0.2")
+                .fromTo(hashtags, { x: () => hashtagsWrap.clientWidth + 40 }, { x: travel, duration: 2.0, ease: "none" });
+
+            tl.to(hashtagsWrap, { opacity: 0, duration: 0.5 }, "+=0.1")
+                .to(frame, {
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "100vw",
+                    height: "100vh",
+                    zIndex: 10,
+                    transformOrigin: "center center",
+                    scale: 1.1,
+                    duration: 1.8,
+                    ease: "power2.out"
+                })
+
+                .to(overlay, { opacity: 0.9, duration: 1.8, ease: "none" }, "<")
+            tl.to(".photo--2", {
+                opacity: 0.3,
+                scale: 1.15,
+                transformOrigin: "center center",
+                duration: 2.2,
+                ease: "power2.out"
+            }, "<") //.hero 옮기기 end
+
+                .addLabel("aboutIn")
+                //.set("#about", { opacity: 1, pointerEvents: "auto" }, "aboutIn+=0.05")
+                .to(".overlay", { opacity: 0.8, duration: 0.4, ease: "power1.out" }, "aboutIn")
+                .set("#about", { opacity: 1, pointerEvents: "auto" }, "aboutIn+=0.05")
+
+
+                .from("#about .inner .title", { y: 60, opacity: 0, duration: 0.8, ease: "power2.out" }, "aboutIn+=0.1")
+                .from("#about .contents .profile", { y: 60, opacity: 0, duration: 0.8, ease: "power2.out" }, "<0.1")
+                .from("#about .contents .right .value", { y: 60, opacity: 0, duration: 0.8, ease: "power2.out" }, "<0.1")
+                .from("#about .contents .right .career", { y: 60, opacity: 0, duration: 0.8, ease: "power2.out" }, "<0.1");
+
+            /* #about end */
+
+            function initPortfolioSliders() {
+                const sliders = document.querySelectorAll('#portfolio .slider');
+                if (!sliders.length) return;
+
+                let lastActiveSlider = null;
+
+                sliders.forEach((sliderEl) => {
+                    const trackEl = sliderEl.querySelector('.track');
+                    const cards = Array.from(trackEl.querySelectorAll('.project-card'));
+                    if (!cards.length) return;
+
+
+                    let current = cards.findIndex(c => c.hasAttribute('active'));
+                    if (current < 0) { current = 0; cards[0].setAttribute('active', ''); }
+
+                    const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+                    function centerActive() {
+                        const sliderRect = sliderEl.getBoundingClientRect();
+                        const cardRect = cards[current].getBoundingClientRect();
+
+                        const sliderCenter = sliderRect.left + sliderRect.width / 2;
+                        const cardCenter = cardRect.left + cardRect.width / 2;
+
+                        const desiredShift = sliderCenter - cardCenter;
+                        const trackWidth = trackEl.scrollWidth;
+                        const sliderWidth = sliderEl.clientWidth;
+
+                        const minX = sliderWidth - trackWidth;
+                        const maxX = 0;
+
+                        const cur = new DOMMatrixReadOnly(getComputedStyle(trackEl).transform);
+                        const curX = cur.m41 || 0;
+
+                        const nextX = clamp(curX + desiredShift, minX, maxX);
+                        trackEl.style.transform = `translate3d(${nextX}px,0,0)`;
+                    }
+
+                    function setActive(index) {
+                        if (index === current || index < 0 || index >= cards.length) return;
+                        cards[current].removeAttribute('active');
+                        current = index;
+                        cards[current].setAttribute('active', '');
+                        centerActive();
+                    }
+
+
+                    cards.forEach((card, i) => {
+                        card.addEventListener('click', () => {
+                            lastActiveSlider = sliderEl;
+                            setActive(i);
+                        });
+                        card.addEventListener('mouseenter', () => { lastActiveSlider = sliderEl; });
+                    });
+
+                    window.addEventListener('load', centerActive);
+                    window.addEventListener('resize', centerActive);
+
+
+                    const io = new IntersectionObserver(([ent]) => {
+                        if (ent.isIntersecting) centerActive();
+                    }, { threshold: 0.2 });
+                    io.observe(sliderEl);
+
+
+                    window.addEventListener('keydown', (e) => {
+                        if (lastActiveSlider !== sliderEl) return;
+                        if (e.key === 'ArrowRight') setActive(current + 1);
+                        if (e.key === 'ArrowLeft') setActive(current - 1);
+                    });
+                });
+            }
+
+
+            initPortfolioSliders();//#portfolio end
+
+            /* const portfolio = document.getElementById('portfolio');
+            const banggle = document.querySelector('#portfolio .banggle');
+
+            const io = new IntersectionObserver(([entry]) => {
+                banggle.style.position = entry.isIntersecting ? 'fixed' : 'absolute';
+                banggle.style.top = entry.isIntersecting ? '50%' : '';
+                banggle.style.left = entry.isIntersecting ? '50%' : '';
+                banggle.style.transform = entry.isIntersecting ? 'translate(-50%, -50%)' : '';
+                banggle.style.opacity = entry.isIntersecting ? '1' : '0';
+            }, { threshold: 0 });
+
+            io.observe(portfolio); */
+
+
+            setTimeout(() => {
+                const imageWraps = document.querySelectorAll(".image_wrap");
+
+                imageWraps.forEach(wrap => {
+                    const img = wrap.querySelector("img");
+                    const target = img.dataset.target.toLowerCase();
+                    const popup = document.querySelector(`.image_popup[data-target="${target}"]`);
+                    if (!popup) return;
+
+                    const closeBtn = popup.querySelector("button");
+
+                    img.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        popup.classList.add("active");
+                        document.body.classList.add("popup-open");
+
+
+                        gsap.fromTo(
+                            popup.querySelector(".inner"),
+                            { scale: 0.8, opacity: 0 },
+                            { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" }
+                        );//gsap
+                    });//open end
+
+                    closeBtn.addEventListener("click", () => {
+                        gsap.to(popup.querySelector(".inner"), {
+                            scale: 0.8,
+                            opacity: 0,
+                            duration: 0.3,
+                            ease: "power2.in",
+                            onComplete: () => {
+                                popup.classList.remove("active");
+                                document.body.classList.remove("popup-open");
+                            },
+                        });
+                    });//close end
+                });
+            }, 500);
+
+            /*  $(window).on('mousemove', function (e) {
+                 let mouseX = e.pageX
+                 let mouseY = e.pageY
+ 
+                 $('cursor').css({
+                     'left': mouseX,
+                     'top': mouseY
+                 });
+ 
+                 $('.project-card').on('mouseenter', function () {
+                     $('.cursor').addClass('scale');
+                 });
+                 $('.project-card').on('mouseleave', function () {
+                     $('.cursor').removeClass('scale');
+                 });
+             });//portfolio mouse end */
+
+
+            /*  observer.observe(graphicArea); */
+
+        });//window.onload
+    </script>
+</head>
+
+<body>
+    <div id="wrap">
+        <header class="header">
+            <div class="inner">
+                <h1 class="logo">
+                    <a href="#">
+                        <img src="img/logo.svg" alt="">
+                    </a>
+                </h1><!-- .logo end -->
+
+                <nav class="nav">
+                    <ul class="gnb">
+                        <li>
+                            <a href="#" class="depth">Main</a>
+                        </li>
+
+                        <li>
+                            <a href="#about" class="depth">About</a>
+                        </li>
+
+                        <li>
+                            <a href="#portfolio" class="depth">Works</a>
+                        </li>
+
+                        <li>
+                            <a href="#contact" class="depth">Contact</a>
+                        </li>
+                    </ul><!-- .gnb end -->
+                </nav><!-- .nav end -->
+            </div><!-- .inner end -->
+        </header> <!-- .header end -->
+
+        <main class="main">
+            <section class="hero">
+                <div class="hero__pin" id="heroPin">
+                    <div class="top-gap"></div>
+
+                    <h1 class="title">I AM RESEARCHER</h1>
+
+                    <div class="frame frame--center" id="frame">
+                        <img class="photo photo--1 is-active" src="img/mainVisual.jpg" alt="">
+                        <img class="photo photo--2" src="img/photo(2).jpg" alt="">
+
+                        <div class="overlay"></div><!-- .overlay end -->
+
+                        <div class="hashtags-wrap">
+                            <div class="hashtags" id="hashtags">
+                                <span># Creativity</span>
+                                <span># Trendy</span>
+                                <span># User-centric</span>
+                                <span># Research</span>
+                                <span># Insight</span>
+                                <span># Flexible</span>
+                            </div><!-- hashtags -->
+                        </div><!-- hashtags-wrap -->
+                    </div><!-- .frame frame--center -->
+
+                    <div class="context context--top">UNCOVER THE CONTEXT!</div>
+                    <div class="context context--bottom">CONTEXT FROM SWIRL</div>
+
+
+
+                    <section class="about" id="about">
+                        <div class="about bg"></div><!-- .about bg end -->
+                        <div class="inner">
+                            <div class="title" id="aboutBtn">
+                                <img src="img/decoBlock(yellow).svg" alt="decoBlock">
+                                <h2>ABOUT ME</h2>
+                            </div><!-- .title end -->
+
+                            <div class="contents">
+                                <div class="profile">
+                                    <div class="profile_image"><img src="img/aboutme.png" alt=""></div>
+
+                                    <div class="profile_info">
+                                        <div class="name">
+                                            <h3>정현희</h3>
+                                            <p>JUNG HYEON HEE</p>
+                                        </div><!-- .name end -->
+
+                                        <div class="birth">
+                                            <p>2002. 12. 13</p>
+                                        </div>
+
+                                        <div class="contact">
+                                            <div class="call">
+                                                <h3>PHONE</h3>
+                                                <p>010 - 4828 - 2714</p>
+                                            </div><!-- .call end -->
+
+                                            <div class="email">
+                                                <h3>EMAIL</h3>
+                                                <p>junghyeon5315@gmail.com</p>
+                                            </div><!-- .email end -->
+                                        </div><!-- .contact end -->
+                                    </div><!-- .profile_info end -->
+                                </div><!-- .profile end -->
+
+                                <div class="right">
+                                    <div class="value">
+                                        <p>UX/UI 디자인은 맥락을 읽고 본질을 파악하는 것에서부터 시작된다고 생각합니다. 이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든것을
+                                            집어삼킬 듯
+                                            보이지만,</p>
+                                        <p>그 근원인 중심부만 파훼하면 사라집니다. 저는 이처럼 복잡한 문제 속에서도 맥락의 중심을 찾아 분석적으로 해결해 나가는 디자이너,
+                                            정현희입니다.</p>
+                                    </div><!-- .value end -->
+
+                                    <div class="career">
+                                        <div class="top">
+
+                                            <div class="edu">
+                                                <h3 class="min_title">EDUCATION</h3><!-- .min_title end -->
+                                                <ul class="min_info">
+                                                    <li>
+                                                        <strong>2025</strong>
+                                                        <span>그린컴퓨터아카데미 UI/UX 반응형 웹 디자인 & 퍼블리셔 훈련 수료</span>
+                                                    </li>
+
+                                                    <li>
+                                                        <strong>2025</strong>
+                                                        <span>신라대학교 광고홍보학과 졸업</span>
+                                                    </li>
+
+                                                    <li>
+                                                        <strong>2025</strong>
+                                                        <span>함안고등학교 졸업</span>
+                                                    </li>
+                                                </ul><!-- min_info end -->
+                                            </div><!-- .edu end -->
+
+                                            <div class="exp">
+                                                <h3 class="min_title">EXPERIENCES & AWARDS</h3><!-- .min_title end -->
+                                                <ul class="min_info">
+                                                    <li>
+                                                        <strong>2025</strong>
+                                                        <span>대학 강의 교안 제작 외주</span>
+                                                    </li>
+
+                                                    <li>
+                                                        <strong>2024</strong>
+                                                        <span>부산패션비즈센터 서포터즈 2기 활동</span>
+                                                    </li>
+
+                                                    <li>
+                                                        <strong>2023</strong>
+                                                        <span>2023 연구실 안전 콘텐츠 공모전 대상 수상</span>
+                                                    </li>
+
+                                                    <li>
+                                                        <strong>2023</strong>
+                                                        <span>2023 부산 영상 공모전 장려 수상</span>
+                                                    </li>
+                                                </ul><!-- min_info end -->
+                                            </div><!-- .exp end -->
+                                        </div><!-- .top end -->
+
+                                        <div class="bottom">
+
+                                            <div class="cer">
+                                                <h3 class="min_title">CERTFICATE</h3><!-- .min_title end -->
+                                                <ul class="min_info">
+                                                    <li>
+                                                        <strong>2025</strong>
+                                                        <span>GTQ 포토샵 1급 </span>
+                                                    </li>
+
+                                                    <li>
+                                                        <strong>2025</strong>
+                                                        <span>GTQI 일러스트레이터 1급</span>
+                                                    </li>
+
+                                                    <li>
+                                                        <strong>2025</strong>
+                                                        <span>GAIQ 구글애널리틱스</span>
+                                                    </li>
+
+                                                    <li>
+                                                        <strong>2025</strong>
+                                                        <span>자동차운전면허 1종 보통</span>
+                                                    </li>
+                                                </ul><!-- min_info end -->
+                                            </div><!-- .cer end -->
+
+                                            <div class="skills">
+                                                <h3 class="min_title">SKILLS </h3><!-- .min_title end -->
+                                                <div class="icon">
+                                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                                    <img src="img/icon_program/InDesign.svg" alt="">
+                                                    <img src="img/icon_program/Premier Pro.svg" alt="">
+                                                    <img src="img/icon_program/After Effects.svg" alt="">
+                                                    <img src="img/icon_program/Animate.svg" alt="">
+                                                    <img src="img/icon_program/Animate.svg" alt="">
+                                                    <img src="img/icon_program/Figma.svg" alt="">
+                                                    <img src="img/icon_program/VSCode.svg" alt="">
+                                                    <img src="img/icon_program/html.svg" alt="">
+                                                    <img src="img/icon_program/css.svg" alt="">
+                                                    <img src="img/icon_program/JavaScript.svg" alt="">
+                                                    <img src="img/icon_program/Github1.svg" alt="">
+                                                </div><!-- .icon end -->
+                                            </div><!-- .skills end -->
+                                        </div><!-- .bottom end -->
+
+
+                                    </div><!-- .career end -->
+                                </div><!-- .right end -->
+
+
+                            </div><!-- .contents end -->
+
+                        </div><!-- .inner end -->
+                    </section><!-- #about end -->
+
+                </div><!-- #heroPin -->
+
+
+            </section><!-- hero -->
+
+            <section class="portfolio" id="portfolio">
+                <!-- <div class="cursor portf"></div> -->
+                <div class="big_title">WORKS</div>
+                <div class="banggle"><img src="img/blueSwirl.svg" alt=""></div><!-- .banggle end -->
+                <div class="inner first">
+                    <div class="title">
+                        <h2>WEB / APP</h2>
+                    </div><!-- .title end -->
+
+                    <div class="slider slide-01">
+                        <div class="track">
+
+                            <article class="project-card" active data-label="NDY">
+
+                                <img class="project-card_bg" src="img/NDY.jpg" alt="">
+                                <div class="project-card_contents">
+                                    <div class="left_contents">
+                                        <img class="project-card_thumb" src="img/NDY_thumb.png" alt="img">
+
+
+
+                                        <div class="text_wrap">
+
+
+                                            <div class="text">
+                                                <strong>LANGUAGE</strong>
+                                                <p>HTML5, CSS, JavaScript, Swiper-Slide</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text">
+                                                <strong>CONTRIBUTION</strong>
+                                                <p>기획, 디자인, 퍼블리싱 100%</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text column">
+                                                <strong>PROGRAM</strong>
+                                                <div class="icon_image">
+                                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                                    <img src="img/icon_program/Figma.svg" alt="">
+                                                    <img src="img/icon_program/VSCode.svg" alt="">
+                                                </div><!-- .icon_image end -->
+                                            </div><!-- .text end -->
+
+                                        </div><!-- .text_wrap end -->
+                                    </div><!-- .left_contents end -->
+
+                                    <div class="right_contents">
+                                        <div class="min_title">
+                                            <p>적응형</p>
+                                            <h3>NDY 웹사이트 리디자인</h3>
+                                        </div><!-- .min_title end -->
+
+                                        <div class="why">
+                                            <strong>WHY</strong>
+                                            <span>국내 렌즈 브랜드 오렌즈(O-LENS) 웹사이트의 단점을 보완하고,
+                                                사용자 접근성을 향상시키는 것을 목표로 작업을 진행했습니다.
+                                                이에 따라 기존의 모바일 친화적인 화면규격을 데스크톱 형식으로 리지다인하여
+                                                웹사이트의 이용자가 늘어나도록 개선하였습니다. </span>
+                                        </div><!-- .why end -->
+
+                                        <div class="insight">
+                                            <strong>INSIGHT</strong>
+                                            <span>이 과정에서 상하좌우 여백을 어떻게 설정하느냐에 따라 화면 전체의 가독성,
+                                                분위기가 달라진다는 점을 알게 되었고, 어떤 콘텐츠에, 어떤 레이아웃을
+                                                적용 시키는지에 따라 편의성의 여부가 결정된다는 것을 깨닫게 되었습니다</span>
+                                        </div><!-- .insight end -->
+
+                                        <div class="btn">
+                                            <button><a
+                                                    href="https://jhyeonheee.github.io/NDY-1029/">WEBSITE</a></button>
+                                            <button><a href="#">PROCESS</a></button>
+                                            <button><a
+                                                    href="https://www.figma.com/design/kZPRfQzYLIo5kfXTIdr9Ww/%EC%A0%95%ED%98%84%ED%9D%AC_NDY-%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4?node-id=0-1&t=WwYKLkWEd8fWuMs8-1">FIGMA</a></button>
+                                            <button><a
+                                                    href="https://www.notion.so/NDY-2a73babcead880f7ae9de543bff06276?source=copy_link">NOTION</a></button>
+                                        </div><!-- .btn end -->
+                                    </div><!-- .right_contents end -->
+
+                                </div><!-- project-card_contents end -->
+                            </article><!-- .project-card end -->
+
+                            <article class="project-card" data-label="OLENS">
+                                <img class="project-card_bg" src="img/olens.jpg" alt="">
+                                <div class="project-card_contents">
+
+                                    <div class="left_contents">
+                                        <img class="project-card_thumb" src="img/olensVisual.png" alt="img">
+
+
+
+                                        <div class="text_wrap">
+
+
+                                            <div class="text">
+                                                <strong>LANGUAGE</strong>
+                                                <p>HTML5, CSS, JavaScript, Swiper-Slide</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text">
+                                                <strong>CONTRIBUTION</strong>
+                                                <p>기획, 디자인, 퍼블리싱 100%</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text column">
+                                                <strong>PROGRAM</strong>
+                                                <div class="icon_image">
+                                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                                    <img src="img/icon_program/Figma.svg" alt="">
+                                                    <img src="img/icon_program/VSCode.svg" alt="">
+                                                </div><!-- .icon_image end -->
+                                            </div><!-- .text end -->
+
+                                        </div><!-- .text_wrap end -->
+                                    </div><!-- .left_contents end -->
+
+                                    <div class="right_contents">
+                                        <div class="min_title">
+                                            <p>적응형</p>
+                                            <h3>OLENS 웹사이트 리디자인</h3>
+                                        </div><!-- .min_title end -->
+
+                                        <div class="why">
+                                            <strong>WHY</strong>
+                                            <span>국내 렌즈 브랜드 오렌즈(O-LENS) 웹사이트의 단점을 보완하고,
+                                                사용자 접근성을 향상시키는 것을 목표로 작업을 진행했습니다.<br />
+                                                이에 따라 기존의 모바일 친화적인 화면규격을 데스크톱 형식으로 리지다인하여
+                                                웹사이트의 이용자가 늘어나도록 개선하였습니다. </span>
+                                        </div><!-- .why end -->
+
+                                        <div class="insight">
+                                            <strong>INSIGHT</strong>
+                                            <span>이 과정에서 상하좌우 여백을 어떻게 설정하느냐에 따라 화면 전체의 가독성,
+                                                분위기가 달라진다는 점을 알게 되었고, 어떤 콘텐츠에, 어떤 레이아웃을
+                                                적용 시키는지에 따라 편의성의 여부가 결정된다는 것을 깨닫게 되었습니다</span>
+                                        </div><!-- .insight end -->
+
+                                        <div class="btn">
+                                            <button><a href="https://jhyeonheee.github.io/O1031/">WEBSITE</a></button>
+                                            <button><a
+                                                    href="file:///D:/%EC%A0%95%ED%98%84%ED%9D%AC/%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4&%EC%9D%BC%EC%A0%95%20%EC%A0%95%EB%A6%AC/%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4%20%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4/%EC%98%A4%EB%A0%8C%EC%A6%88.pdf">PROCESS</a></button>
+                                            <button><a
+                                                    href="https://www.figma.com/design/wMvPcnXcty6FDVuKKI7hhk/%EC%A0%95%ED%98%84%ED%9D%AC_%EC%98%A4%EB%A0%8C%EC%A6%88%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8--%EB%B3%B5%EC%82%AC-?node-id=0-1&t=PRzYvGsb1BqY6BU5-1">FIGMA</a></button>
+                                            <button><a
+                                                    href="https://www.notion.so/25b3babcead8808ba220de9a77e15786?source=copy_link">NOTION</a></button>
+                                        </div><!-- .btn end -->
+                                    </div><!-- .right_contents end -->
+
+                                </div><!-- project-card_contents end -->
+
+                            </article><!-- .project-card end -->
+
+                            <article class="project-card" data-label="MUSEUM">
+                                <img class="project-card_bg" src="img/Museum.png" alt="">
+                                <div class="project-card_contents">
+
+                                    <div class="left_contents">
+                                        <img class="project-card_thumb" src="img/museumVisual.png" alt="img">
+
+                                       
+
+                                        <div class="text_wrap">
+
+
+                                            <div class="text">
+                                                <strong>LANGUAGE</strong>
+                                                <p>HTML5, CSS, JavaScript, Swiper-Slide</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text">
+                                                <strong>CONTRIBUTION</strong>
+                                                <p>기획, 디자인, 퍼블리싱 100%</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text column">
+                                                <strong>PROGRAM</strong>
+                                                <div class="icon_image">
+                                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                                    <img src="img/icon_program/Figma.svg" alt="">
+                                                    <img src="img/icon_program/VSCode.svg" alt="">
+                                                </div><!-- .icon_image end -->
+                                            </div><!-- .text end -->
+
+                                        </div><!-- .text_wrap end -->
+                                    </div><!-- .left_contents end -->
+
+                                    <div class="right_contents">
+                                        <div class="min_title">
+                                            <p>반응형</p>
+                                            <h3>MUSEUM 웹사이트 리디자인</h3>
+                                        </div><!-- .min_title end -->
+
+                                        <div class="why">
+                                            <strong>WHY</strong>
+                                            <span>국내 렌즈 브랜드 오렌즈(O-LENS) 웹사이트의 단점을 보완하고,
+                                                사용자 접근성을 향상시키는 것을 목표로 작업을 진행했습니다.<br />
+                                                이에 따라 기존의 모바일 친화적인 화면규격을 데스크톱 형식으로 리지다인하여
+                                                웹사이트의 이용자가 늘어나도록 개선하였습니다. </span>
+                                        </div><!-- .why end -->
+
+                                        <div class="insight">
+                                            <strong>INSIGHT</strong>
+                                            <span>이 과정에서 상하좌우 여백을 어떻게 설정하느냐에 따라 화면 전체의 가독성,
+                                                분위기가 달라진다는 점을 알게 되었고, 어떤 콘텐츠에, 어떤 레이아웃을<br />
+                                                적용 시키는지에 따라 편의성의 여부가 결정된다는 것을 깨닫게 되었습니다</span>
+                                        </div><!-- .insight end -->
+
+                                         <div class="btn">
+                                            <button><a href="https://jhyeonheee.github.io/M1030/">WEBSITE</a></button>
+                                            <button><a
+                                                    href="d:\정현희\포트폴리오&일정 정리\포트폴리오 프로세스\국립중앙박물관.pdf">PROCESS</a></button>
+                                            <button><a
+                                                    href="https://www.figma.com/design/IeJZMwZOGtuQzIG2PjkWVt/%EC%A0%95%ED%98%84%ED%9D%AC_%EA%B5%AD%EB%A6%BD%EC%A4%91%EC%95%99%EB%B0%95%EB%AC%BC%EA%B4%80-%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4?node-id=0-1&t=V27aT6LlaCCTUNVT-1">FIGMA</a></button>
+                                            <button><a
+                                                    href="https://www.notion.so/28f3babcead8804fbec1f2f10a8a02c6?source=copy_link">NOTION</a></button>
+                                        </div><!-- .btn end -->
+                                    </div><!-- .right_contents end -->
+
+                                </div><!-- project-card_contents end -->
+
+                            </article><!-- .project-card end -->
+
+                            <article class="project-card" data-label="ILLIYOON">
+                                <img class="project-card_bg" src="img/Illiyoon.jpg" alt="">
+                                <div class="project-card_contents">
+
+                                    <div class="left_contents">
+                                        <img class="project-card_thumb" src="img/illiyoonApp.png" alt="img">
+
+                                        <div class="text_wrap">
+
+
+                                            <div class="text">
+                                                <strong>LANGUAGE</strong>
+                                                <p>HTML5, CSS, JavaScript, Swiper-Slide</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text">
+                                                <strong>CONTRIBUTION</strong>
+                                                <p>기획, 디자인, 프로토타입 100%</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text column">
+                                                <strong>PROGRAM</strong>
+                                                <div class="icon_image">
+                                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                                    <img src="img/icon_program/Figma.svg" alt="">
+                                                </div><!-- .icon_image end -->
+                                            </div><!-- .text end -->
+
+                                        </div><!-- .text_wrap end -->
+                                    </div><!-- .left_contents end -->
+
+                                    <div class="right_contents">
+                                        <div class="min_title">
+                                            <p>모바일</p>
+                                            <h3>ILLIYOON 앱 리디자인</h3>
+                                        </div><!-- .min_title end -->
+
+                                        <div class="why">
+                                            <strong>WHY</strong>
+                                            <span>국내 렌즈 브랜드 오렌즈(O-LENS) 웹사이트의 단점을 보완하고,
+                                                사용자 접근성을 향상시키는 것을 목표로 작업을 진행했습니다.<br />
+                                                이에 따라 기존의 모바일 친화적인 화면규격을 데스크톱 형식으로 리지다인하여
+                                                웹사이트의 이용자가 늘어나도록 개선하였습니다. </span>
+                                        </div><!-- .why end -->
+
+                                        <div class="insight">
+                                            <strong>INSIGHT</strong>
+                                            <span>이 과정에서 상하좌우 여백을 어떻게 설정하느냐에 따라 화면 전체의 가독성,
+                                                분위기가 달라진다는 점을 알게 되었고, 어떤 콘텐츠에, 어떤 레이아웃을<br />
+                                                적용 시키는지에 따라 편의성의 여부가 결정된다는 것을 깨닫게 되었습니다</span>
+                                        </div><!-- .insight end -->
+
+                                        <div class="btn">
+                                            <button><a
+                                                    href="file:///D:/%EC%A0%95%ED%98%84%ED%9D%AC/%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4&%EC%9D%BC%EC%A0%95%20%EC%A0%95%EB%A6%AC/%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4%20%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4/%EC%9D%BC%EB%A6%AC%EC%9C%A4.pdf">PROCESS</a></button>
+                                            <button><a
+                                                    href="https://www.figma.com/design/aMU3Qy52wp5a3yRy8cBwJI/%EC%A0%95%ED%98%84%ED%9D%AC_ILLIYOON-%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4?t=WwYKLkWEd8fWuMs8-1">FIGMA</a></button>
+                                            <button><a
+                                                    href="https://www.notion.so/2a73babcead8802e9e52ee38dbc6d330?source=copy_link">NOTION</a></button>
+                                        </div><!-- .btn end -->
+                                    </div><!-- .right_contents end -->
+
+                                </div><!-- project-card_contents end -->
+
+                            </article><!-- .project-card end -->
+
+                            <article class="project-card" data-label="SUBWAY">
+                                <img class="project-card_bg" src="img/subway.jpg" alt="">
+                                <div class="project-card_contents">
+
+                                    <div class="left_contents">
+                                        <img class="project-card_thumb" src="img/subwayApp.png" alt="img">
+
+                                        
+
+                                        <div class="text_wrap">
+
+
+                                            <div class="text">
+                                                <strong>LANGUAGE</strong>
+                                                <p>HTML5, CSS, JavaScript, Swiper-Slide</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text">
+                                                <strong>CONTRIBUTION</strong>
+                                                <p>기획, 디자인, 퍼블리싱 100%</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text column">
+                                                <strong>PROGRAM</strong>
+                                                <div class="icon_image">
+                                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                                    <img src="img/icon_program/Illustrator.svg" alt="">
+                                                </div><!-- .icon_image end -->
+                                            </div><!-- .text end -->
+
+                                        </div><!-- .text_wrap end -->
+                                    </div><!-- .left_contents end -->
+
+                                    <div class="right_contents">
+                                        <div class="min_title">
+                                            <p>모바일</p>
+                                            <h3>SUBWAY 앱 리디자인</h3>
+                                        </div><!-- .min_title end -->
+
+                                        <div class="why">
+                                            <strong>WHY</strong>
+                                            <span>국내 렌즈 브랜드 오렌즈(O-LENS) 웹사이트의 단점을 보완하고,
+                                                사용자 접근성을 향상시키는 것을 목표로 작업을 진행했습니다.
+                                                이에 따라 기존의 모바일 친화적인 화면규격을 데스크톱 형식으로 리지다인하여
+                                                웹사이트의 이용자가 늘어나도록 개선하였습니다. </span>
+                                        </div><!-- .why end -->
+
+                                        <div class="insight">
+                                            <strong>INSIGHT</strong>
+                                            <span>이 과정에서 상하좌우 여백을 어떻게 설정하느냐에 따라 화면 전체의 가독성,
+                                                분위기가 달라진다는 점을 알게 되었고, 어떤 콘텐츠에, 어떤 레이아웃을
+                                                적용 시키는지에 따라 편의성의 여부가 결정된다는 것을 깨닫게 되었습니다</span>
+                                        </div><!-- .insight end -->
+
+                                        <div class="btn">
+                                            <button><a href="#">VIEW</a></button>
+                                            <button><a
+                                                    href="file:///D:/%EC%A0%95%ED%98%84%ED%9D%AC/%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4&%EC%9D%BC%EC%A0%95%20%EC%A0%95%EB%A6%AC/%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4%20%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4/%EC%8D%A8%EB%B8%8C%EC%9B%A8%EC%9D%B4.pdf">PROCESS</a></button>
+                                            <button><a
+                                                    href="https://www.notion.so/23a3babcead881cc98c1d759358a433d?source=copy_link">NOTION</a></button>
+                                        </div><!-- .btn end -->
+
+                                    </div><!-- .right_contents end -->
+
+                                </div><!-- project-card_contents end -->
+
+                            </article><!-- .project-card end -->
+
+                        </div><!-- #track.track end -->
+                    </div><!-- .slider.slide-01 end -->
+                </div><!-- .inner end  -->
+
+
+
+
+                <div class="inner second">
+                    <div class="title">
+                        <h2>IMITATION</h2>
+                    </div><!-- .title end -->
+
+                    <div class="slider slide-01">
+                        <div class="track">
+
+                            <article class="project-card" active data-label="NDY">
+
+                                <img class="project-card_bg" src="img/ssocar.jpg" alt="">
+                                <div class="project-card_contents">
+                                    <div class="left_contents">
+                                        <img class="project-card_thumb" src="img/ssocarVisual.JPG" alt="img">
+
+                                       
+                                        <div class="text_wrap">
+
+
+                                            <div class="text">
+                                                <strong>LANGUAGE</strong>
+                                                <p>HTML5, CSS, JavaScript, Swiper-Slide</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text">
+                                                <strong>CONTRIBUTION</strong>
+                                                <p>기획, 디자인, 퍼블리싱 100%</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text column">
+                                                <strong>PROGRAM</strong>
+                                                <div class="icon_image">
+                                                    <img src="img/icon_program/VSCode.svg" alt="">
+                                                </div><!-- .icon_image end -->
+                                            </div><!-- .text end -->
+
+                                        </div><!-- .text_wrap end -->
+                                    </div><!-- .left_contents end -->
+
+                                    <div class="right_contents">
+                                        <div class="min_title">
+                                            <p>적응형</p>
+                                            <h3>NDY 웹사이트 리디자인</h3>
+                                        </div><!-- .min_title end -->
+
+                                        <div class="why">
+                                            <strong>WHY</strong>
+                                            <span>국내 렌즈 브랜드 오렌즈(O-LENS) 웹사이트의 단점을 보완하고,
+                                                사용자 접근성을 향상시키는 것을 목표로 작업을 진행했습니다.
+                                                이에 따라 기존의 모바일 친화적인 화면규격을 데스크톱 형식으로 리지다인하여
+                                                웹사이트의 이용자가 늘어나도록 개선하였습니다. </span>
+                                        </div><!-- .why end -->
+
+                                        <div class="insight">
+                                            <strong>INSIGHT</strong>
+                                            <span>이 과정에서 상하좌우 여백을 어떻게 설정하느냐에 따라 화면 전체의 가독성,
+                                                분위기가 달라진다는 점을 알게 되었고, 어떤 콘텐츠에, 어떤 레이아웃을
+                                                적용 시키는지에 따라 편의성의 여부가 결정된다는 것을 깨닫게 되었습니다</span>
+                                        </div><!-- .insight end -->
+
+                                         <div class="btn">
+                                            <button><a href="https://jhyeonheee.github.io/ssocar/">WEBSITE</a></button>
+                                            <button><a
+                                                    href="https://www.notion.so/_-2613babcead880af801dc02c16787d29?source=copy_link">NOTION</a></button>
+                                        </div><!-- .btn end -->
+
+                                    </div><!-- .right_contents end -->
+
+                                </div><!-- project-card_contents end -->
+                            </article><!-- .project-card end -->
+
+                            <article class="project-card" data-label="OLENS">
+                                <img class="project-card_bg" src="img/innotionS.png" alt="">
+                                <div class="project-card_contents">
+
+                                    <div class="left_contents">
+                                        <img class="project-card_thumb" src="img/innoceansVisual.JPG" alt="img">
+
+                                        
+                                        <div class="text_wrap">
+
+
+                                            <div class="text">
+                                                <strong>LANGUAGE</strong>
+                                                <p>HTML5, CSS, JavaScript, Swiper-Slide</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text">
+                                                <strong>CONTRIBUTION</strong>
+                                                <p>기획, 디자인, 퍼블리싱 100%</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text column">
+                                                <strong>PROGRAM</strong>
+                                                <div class="icon_image">
+                                                    <img src="img/icon_program/VSCode.svg" alt="">
+                                                </div><!-- .icon_image end -->
+                                            </div><!-- .text end -->
+
+                                        </div><!-- .text_wrap end -->
+                                    </div><!-- .left_contents end -->
+
+                                    <div class="right_contents">
+                                        <div class="min_title">
+                                            <p>적응형</p>
+                                            <h3>INNOCEANS 웹사이트 리디자인</h3>
+                                        </div><!-- .min_title end -->
+
+                                        <div class="why">
+                                            <strong>WHY</strong>
+                                            <span>국내 렌즈 브랜드 오렌즈(O-LENS) 웹사이트의 단점을 보완하고,
+                                                사용자 접근성을 향상시키는 것을 목표로 작업을 진행했습니다.<br />
+                                                이에 따라 기존의 모바일 친화적인 화면규격을 데스크톱 형식으로 리지다인하여
+                                                웹사이트의 이용자가 늘어나도록 개선하였습니다. </span>
+                                        </div><!-- .why end -->
+
+                                        <div class="insight">
+                                            <strong>INSIGHT</strong>
+                                            <span>이 과정에서 상하좌우 여백을 어떻게 설정하느냐에 따라 화면 전체의 가독성,
+                                                분위기가 달라진다는 점을 알게 되었고, 어떤 콘텐츠에, 어떤 레이아웃을<br />
+                                                적용 시키는지에 따라 편의성의 여부가 결정된다는 것을 깨닫게 되었습니다</span>
+                                        </div><!-- .insight end -->
+
+                                        <div class="btn">
+                                            <button><a
+                                                    href="https://jhyeonheee.github.io/innoceans/">WEBSITE</a></button>
+                                        </div><!-- .btn end -->
+
+                                    </div><!-- .right_contents end -->
+
+                                </div><!-- project-card_contents end -->
+
+                            </article><!-- .project-card end -->
+
+                            <article class="project-card" data-label="MUSEUM">
+                                <img class="project-card_bg" src="img/moneytree.jpg" alt="">
+                                <div class="project-card_contents">
+
+                                    <div class="left_contents">
+                                        <img class="project-card_thumb" src="img/moneytreeVisual.png" alt="img">
+
+                                        
+
+                                        <div class="text_wrap">
+
+
+                                            <div class="text">
+                                                <strong>LANGUAGE</strong>
+                                                <p>HTML5, CSS, JavaScript, Swiper-Slide</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text">
+                                                <strong>CONTRIBUTION</strong>
+                                                <p>기획, 디자인, 퍼블리싱 100%</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text column">
+                                                <strong>PROGRAM</strong>
+                                                <div class="icon_image">
+
+                                                    <img src="img/icon_program/Figma.svg" alt="">
+
+                                                </div><!-- .icon_image end -->
+                                            </div><!-- .text end -->
+
+                                        </div><!-- .text_wrap end -->
+                                    </div><!-- .left_contents end -->
+
+                                    <div class="right_contents">
+                                        <div class="min_title">
+                                            <p>반응형</p>
+                                            <h3>MONEYTREE 웹사이트 리디자인</h3>
+                                        </div><!-- .min_title end -->
+
+                                        <div class="why">
+                                            <strong>WHY</strong>
+                                            <span>국내 렌즈 브랜드 오렌즈(O-LENS) 웹사이트의 단점을 보완하고,
+                                                사용자 접근성을 향상시키는 것을 목표로 작업을 진행했습니다.<br />
+                                                이에 따라 기존의 모바일 친화적인 화면규격을 데스크톱 형식으로 리지다인하여
+                                                웹사이트의 이용자가 늘어나도록 개선하였습니다. </span>
+                                        </div><!-- .why end -->
+
+                                        <div class="insight">
+                                            <strong>INSIGHT</strong>
+                                            <span>이 과정에서 상하좌우 여백을 어떻게 설정하느냐에 따라 화면 전체의 가독성,
+                                                분위기가 달라진다는 점을 알게 되었고, 어떤 콘텐츠에, 어떤 레이아웃을<br />
+                                                적용 시키는지에 따라 편의성의 여부가 결정된다는 것을 깨닫게 되었습니다</span>
+                                        </div><!-- .insight end -->
+
+                                        <div class="btn">
+                                            <button><a
+                                                    href="https://www.figma.com/design/tVCtXToRpZrChkaF1wpgGx/%EB%A8%B8%EB%8B%88%ED%8A%B8%EB%A6%AC?node-id=0-1&t=zdAFya2QA8iBbjOj-1">FIGMA</a></button>
+                                            <button><a
+                                                    href="https://www.figma.com/proto/tVCtXToRpZrChkaF1wpgGx/%EB%A8%B8%EB%8B%88%ED%8A%B8%EB%A6%AC?node-id=2-14&t=WwYKLkWEd8fWuMs8-1">PROTOTYPE</a></button>
+                                        </div><!-- .btn end -->
+                                    </div><!-- .right_contents end -->
+
+                                </div><!-- project-card_contents end -->
+
+                            </article><!-- .project-card end -->
+
+                            <article class="project-card" data-label="ILLIYOON">
+                                <img class="project-card_bg" src="img/alramy.jpg" alt="">
+                                <div class="project-card_contents">
+
+                                    <div class="left_contents">
+                                        <img class="project-card_thumb" src="img/alarmyApp.png" alt="img">
+
+                                        
+
+                                        <div class="text_wrap">
+
+
+                                            <div class="text">
+                                                <strong>LANGUAGE</strong>
+                                                <p>HTML5, CSS, JavaScript, Swiper-Slide</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text">
+                                                <strong>CONTRIBUTION</strong>
+                                                <p>기획, 디자인, 프로토타입 100%</p>
+                                            </div><!-- .text end -->
+
+
+
+                                            <div class="text column">
+                                                <strong>PROGRAM</strong>
+                                                <div class="icon_image">
+                                                    <img src="img/icon_program/Photoshop.svg" alt="">
+                                                </div><!-- .icon_image end -->
+                                            </div><!-- .text end -->
+
+                                        </div><!-- .text_wrap end -->
+                                    </div><!-- .left_contents end -->
+
+                                    <div class="right_contents">
+                                        <div class="min_title">
+                                            <p>모바일</p>
+                                            <h3>ALRALMY 앱 모작</h3>
+                                        </div><!-- .min_title end -->
+
+                                        <div class="why">
+                                            <strong>WHY</strong>
+                                            <span>국내 렌즈 브랜드 오렌즈(O-LENS) 웹사이트의 단점을 보완하고,
+                                                사용자 접근성을 향상시키는 것을 목표로 작업을 진행했습니다.<br />
+                                                이에 따라 기존의 모바일 친화적인 화면규격을 데스크톱 형식으로 리지다인하여
+                                                웹사이트의 이용자가 늘어나도록 개선하였습니다. </span>
+                                        </div><!-- .why end -->
+
+                                        <div class="insight">
+                                            <strong>INSIGHT</strong>
+                                            <span>이 과정에서 상하좌우 여백을 어떻게 설정하느냐에 따라 화면 전체의 가독성,
+                                                분위기가 달라진다는 점을 알게 되었고, 어떤 콘텐츠에, 어떤 레이아웃을<br />
+                                                적용 시키는지에 따라 편의성의 여부가 결정된다는 것을 깨닫게 되었습니다</span>
+                                        </div><!-- .insight end -->
+
+                                        <div class="btn">
+                                            <button><a href="#">WEBSITE</a></button>
+                                            <button><a href="#">PROCESS</a></button>
+                                            <button><a href="#">FIGMA</a></button>
+                                            <button><a href="#">NOTION</a></button>
+                                        </div><!-- .btn end -->
+                                    </div><!-- .right_contents end -->
+
+                                </div><!-- project-card_contents end -->
+
+                            </article><!-- .project-card end -->
+
+
+                        </div><!-- #track.track end -->
+                    </div><!-- .slider.slide-01 end -->
+                </div><!-- .inner end  -->
+            </section><!-- #portfolio end -->
+
+            <div class="graphic">
+                <div class="inner">
+                    <h2 class="title">GRAPHIC DESIGN</h2>
+                    <h2 aria-hidden="true" class="title outline-text">GRAPHIC DESIGN</h2>
+                    <h2 aria-hidden="true" class="title filter-text">GRAPHIC DESIGN</h2>
+                    <div id="wrapper">
+                        <section id="content">
+                            <section class="images">
+
+                                <div class="image_wrap first ">
+                                    <img src="img/alramy.jpg" data-target="alramy" alt="img">
+                                    <div class="hover">
+                                        <div class="hover_text">
+                                            <strong>작품설명</strong>
+                                            <p>소요시간 30분</p>
+                                        </div><!-- .hover_text end -->
+                                        <div class="hover_image">
+                                            <img src="img/icon_program/Photoshop.svg" alt="">
+                                            <img src="img/icon_program/Illustrator.svg" alt="">
+                                        </div><!-- .hover_image end -->
+                                    </div><!-- .hover end -->
+
+                                </div><!-- image_wrap -->
+
+
+
+                                <div class="image_wrap second">
+                                    <img src="img/Illiyoon.jpg" data-target="illiyoon" alt="img">
+                                    <div class="hover">
+                                        <div class="hover_text">
+                                            <strong>작품설명</strong>
+                                            <p>소요시간 30분</p>
+                                        </div><!-- .hover_text end -->
+                                        <div class="hover_image">
+                                            <img src="img/icon_program/Photoshop.svg" alt="">
+                                            <img src="img/icon_program/Illustrator.svg" alt="">
+                                        </div><!-- .hover_image end -->
+                                    </div><!-- .hover end -->
+                                </div><!-- image_wrap -->
+
+
+
+                                <div class="image_wrap third">
+                                    <img src="img/subway.jpg" data-target="subway" alt="img">
+                                    <div class="hover">
+                                        <div class="hover_text">
+                                            <strong>작품설명</strong>
+                                            <p>소요시간 30분</p>
+                                        </div><!-- .hover_text end -->
+                                        <div class="hover_image">
+                                            <img src="img/icon_program/Photoshop.svg" alt="">
+                                            <img src="img/icon_program/Illustrator.svg" alt="">
+                                        </div><!-- .hover_image end -->
+                                    </div><!-- .hover end -->
+                                </div><!-- image_wrap -->
+
+
+                                <div class="image_wrap forth">
+                                    <img src="img/storm.jpg" data-target="storm" alt="img">
+                                    <div class="hover">
+                                        <div class="hover_text">
+                                            <strong>작품설명</strong>
+                                            <p>소요시간 30분</p>
+                                        </div><!-- .hover_text end -->
+                                        <div class="hover_image">
+                                            <img src="img/icon_program/Photoshop.svg" alt="">
+                                            <img src="img/icon_program/Illustrator.svg" alt="">
+                                        </div><!-- .hover_image end -->
+                                    </div><!-- .hover end -->
+                                </div><!-- image_wrap -->
+
+                                <div class="image_wrap fifth">
+                                    <img src="img/NDY.jpg" data-target="ndy" alt="img">
+                                    <div class="hover">
+                                        <div class="hover_text">
+                                            <strong>작품설명</strong>
+                                            <p>소요시간 30분</p>
+                                        </div><!-- .hover_text end -->
+                                        <div class="hover_image">
+                                            <img src="img/icon_program/Photoshop.svg" alt="">
+                                            <img src="img/icon_program/Illustrator.svg" alt="">
+                                        </div><!-- .hover_image end -->
+                                    </div><!-- .hover end -->
+                                </div><!-- image_wrap -->
+
+                                <div class="image_wrap sixth">
+                                    <img src="img/moneytree.jpg" data-target="moneytree" alt="img">
+                                    <div class="hover">
+                                        <div class="hover_text">
+                                            <strong>작품설명</strong>
+                                            <p>소요시간 30분</p>
+                                        </div><!-- .hover_text end -->
+                                        <div class="hover_image">
+                                            <img src="img/icon_program/Photoshop.svg" alt="">
+                                            <img src="img/icon_program/Illustrator.svg" alt="">
+                                        </div><!-- .hover_image end -->
+                                    </div><!-- .hover end -->
+                                </div><!-- image_wrap -->
+
+
+                                <div class="image_wrap seventh">
+                                    <img src="img/alramy.jpg" data-target="alramy" alt="img">
+                                    <div class="hover">
+                                        <div class="hover_text">
+                                            <strong>작품설명</strong>
+                                            <p>소요시간 30분</p>
+                                        </div><!-- .hover_text end -->
+                                        <div class="hover_image">
+                                            <img src="img/icon_program/Photoshop.svg" alt="">
+                                            <img src="img/icon_program/Illustrator.svg" alt="">
+                                        </div><!-- .hover_image end -->
+                                    </div><!-- .hover end -->
+                                </div><!-- image_wrap -->
+
+                                <div class="image_wrap eighth" >
+                                    <img src="img/Illiyoon.jpg" data-target="illiyoon" alt="img">
+                                    <div class="hover">
+                                        <div class="hover_text">
+                                            <strong>작품설명</strong>
+                                            <p>소요시간 30분</p>
+                                        </div><!-- .hover_text end -->
+                                        <div class="hover_image">
+                                            <img src="img/icon_program/Photoshop.svg" alt="">
+                                            <img src="img/icon_program/Illustrator.svg" alt="">
+                                        </div><!-- .hover_image end -->
+                                    </div><!-- .hover end -->
+                                </div><!-- image_wrap -->
+
+                            </section><!-- .images -->
+                        </section><!-- #content end -->
+                    </div><!-- .wrapper end -->
+
+                    <div class="mobile_image">
+                        <div class="show">
+                            <a href="img/alramy.jpg" data-fancybox="gallery">
+
+                            </a><!-- data-fancybox end -->
+                        </div><!-- .show end -->
+                    </div><!-- .mobile_image end -->
+
+                    <div class="image_popup first" data-target="alramy">
+                        <div class="inner">
+                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                            <button><img src="img/close_btn.svg" alt=""></button>
+                            <div class="popup_text">
+                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
+                            </div><!-- .popup_text end -->
+                        </div><!-- .inner end -->
+                    </div><!-- image_popup end -->
+
+
+
+                    <div class="image_popup second" data-target="illiyoon">
+                        <div class="inner">
+                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                            <button><img src="img/close_btn.svg" alt=""></button>
+                            <div class="popup_text">
+                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
+                            </div><!-- .popup_text end -->
+                        </div><!-- .inner end -->
+                    </div><!-- image_popup end -->
+
+                    <div class="image_popup third" data-target="subway">
+                        <div class="inner">
+                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                            <button><img src="img/close_btn.svg" alt=""></button>
+                            <div class="popup_text">
+                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
+                            </div><!-- .popup_text end -->
+                        </div><!-- .inner end -->
+                    </div><!-- image_popup end -->
+
+                    <div class="image_popup forth" data-target="storm">
+                        <div class="inner">
+                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                            <button><img src="img/close_btn.svg" alt=""></button>
+                            <div class="popup_text">
+                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
+                            </div><!-- .popup_text end -->
+                        </div><!-- .inner end -->
+                    </div><!-- image_popup end -->
+
+                    <div class="image_popup fifth" data-target="ndy">
+                        <div class="inner">
+                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                            <button><img src="img/close_btn.svg" alt=""></button>
+                            <div class="popup_text">
+                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
+                            </div><!-- .popup_text end -->
+                        </div><!-- .inner end -->
+                    </div><!-- image_popup end -->
+
+                    <div class="image_popup sixth" data-target="moneytree">
+                        <div class="inner">
+                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                            <button><img src="img/close_btn.svg" alt=""></button>
+                            <div class="popup_text">
+                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
+                            </div><!-- .popup_text end -->
+                        </div><!-- .inner end -->
+                    </div><!-- image_popup end -->
+
+
+
+                    <div class="image_popup seventh" data-target="alramy">
+                        <div class="inner">
+                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                            <button><img src="img/close_btn.svg" alt=""></button>
+                            <div class="popup_text">
+                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
+                            </div><!-- .popup_text end -->
+                        </div><!-- .inner end -->
+                    </div><!-- image_popup end -->
+
+                    <div class="image_popup eighth" data-target="illiyoon">
+                        <div class="inner">
+                            <img src="img/alramy.jpg" alt="확대 이미지" class="bigImg">
+                            <button><img src="img/close_btn.svg" alt=""></button>
+                            <div class="popup_text">
+                                <p class="popup_desc"> UXUI에서 맥락을 읽고 본질을 파악하는 것이 문제를 해결하는 첫 단계라고 생각합니다.
+                                    이 모습은 소용돌이와 닮아있습니다. 강렬함으로 모든 것을 집어삼킬 듯 보이지만,
+                                    그 근원인 중심부만 파훼하면 사라집니다.</p>
+                            </div><!-- .popup_text end -->
+                        </div><!-- .inner end -->
+                    </div><!-- image_popup end -->
+
+                </div><!-- .inner end -->
+            </div><!-- .graphic end -->
+
+
+        </main><!-- .main end -->
+
+        <footer class="footer" id="contact">
+            <div class="inner">
+                <div class="contact_title">
+                    <img src="img/decoBlock.svg" alt="">
+                    <h3>CONTACT ME</h3>
+                </div><!-- .title end -->
+                <div class="contact">
+                    <a href="tel:010-4828-2714" class="icon phone">
+                        <img src="img/icon_contact/phone.png" alt="phone">
+                        <p>010 - 4828 - 2714</p>
+                    </a><!-- phone end -->
+                    <a href="mailto:junghyeon5315@gmail.com" class="icon mail_address">
+                        <img src="img/icon_contact/mail.png" alt="mail">
+                        <p>junghyeon5315@gmail.com</p>
+                    </a><!-- .mail_address end -->
+                    <a href="https://open.kakao.com/o/sg0XJi1h" class="icon kakao">
+                        <img src="img/qr.png" alt="mail">
+                        <p>jhh9505</p>
+                    </a><!-- .kakao end -->
+                    <a href="https://github.com/jhyeonheee" class="icon githurb">
+                        <img src="img/icon_contact/githurb.png" alt="githurb">
+                        <p>@jhyeonheee</p>
+                    </a><!-- .git_hurb end -->
+                </div><!-- .contact end -->
+                <span class="update">포트폴리오는 지속적으로 업데이트 될 예정입니다</span>
+            </div><!-- .inner end -->
+        </footer><!-- .footer end -->
+    </div><!-- #wrap end -->
+</body>
+
+</html>
